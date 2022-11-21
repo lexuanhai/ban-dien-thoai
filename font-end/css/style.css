@@ -110,7 +110,7 @@ opacity: 0;} */
 	max-width: 75%;
 }
 
-/*.container{
+.container{
 	max-width: 1200px;
     position: relative;
 	width: 100%;
@@ -118,7 +118,7 @@ opacity: 0;} */
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-}*/
+}
 a{
 	text-decoration: none;
 }

@@ -1,32 +1,7 @@
-﻿@using Microsoft.AspNetCore.Http
-@using Newtonsoft.Json
-@using TECH.Areas.Admin.Models
-@{
-    var userString = Context.Session.GetString("UserInfor");
-    var user = new UserModelView();
-    if (userString != null)
-    {
-        user = JsonConvert.DeserializeObject<UserModelView>(userString);
-    }
-}
-
 <html>
    <head>
       <title> Trang chủ </title>
-	 @* <link href="~/public/admin/css/bootstrap.css" rel="stylesheet" />*@
-	 <link rel="stylesheet" href="/public/admin/css/bootstrap.css">
-    <link rel="stylesheet" href="/public/customer/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="/public/admin/vendors/bootstrap-icons/bootstrap-icons.css">
-    <link rel="stylesheet" href="/public/customer/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/public/customer/css/magnific-popup.css">
-
-	  <link rel="stylesheet"href="/website/css/style.css">
-	   @RenderSection("Styles", required: false)
-	   <style>
-		   body{
-			   background:none
-		   }
-	   </style>
+	  <link rel="stylesheet"href="./css/style.css">
    </head>
    <body>
       <div class="box-head">
@@ -46,7 +21,7 @@
                <div class="box-col-4">
                   <div class="box-logo">
                      <a href="javascript:void(0)">
-                     <img width="320" height="80" src="/website/img/logomoi-compressor.png" alt="Logo beautygarden.vn" class="img-reponsive">
+                     <img width="320" height="80" src="./img/logomoi-compressor.png" alt="Logo beautygarden.vn" class="img-reponsive">
                      </a>
                   </div>
                </div>
@@ -86,11 +61,11 @@
       </div>
       <div class="box-banner">
          <div class="container">
-            <img width="100%" height="450" src="/website/img/bannerweb-20Oct.png" alt="Day for ladies" class="img-reponsive image-item">
+            <img width="100%" height="450" src="./img/bannerweb-20Oct.png" alt="Day for ladies" class="img-reponsive image-item">
+			<img width="100%" height="450" src="./img/cocoon-my-pham-thuan-chay-viet-nam.jpg" alt="Day for ladies" class="img-reponsive image-item">
          </div>
       </div>
       <div class="box-content-custom">
-		   @RenderBody()  
          <div class="container">
             <div class="box-product">
                <h2 class="title-box"><a href="javascript:void(0)" title="">
@@ -101,7 +76,7 @@
                      <div class="pd-box ">
                         <div class="box-images">
                            <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-                           <img width="206" height="230" src="/website/img/san-pham1.jpg" class="img-reponsive owl-lazy " style="opacity: 1;">
+                           <img width="206" height="230" src="img/san-pham1.jpg" class="img-reponsive owl-lazy " style="opacity: 1;">
                            </a>
                            <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
                            <div class="sale-off ">70%<br>OFF</div>
@@ -121,7 +96,7 @@
 					<div class="pd-box ">
 					   <div class="box-images">
 						  <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						  <img width="206" height="230" src="/website/img/san-pham2.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						  <img width="206" height="230" src="img/san-pham2.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						  </a>
 						  <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						  <div class="sale-off ">70%<br>OFF</div>
@@ -141,7 +116,7 @@
 					<div class="pd-box ">
 					   <div class="box-images">
 						  <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						  <img width="206" height="230" src="/website/img/san-pham3.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						  <img width="206" height="230" src="img/san-pham3.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						  </a>
 						  <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						  <div class="sale-off ">20%<br>OFF</div>
@@ -161,7 +136,7 @@
 					<div class="pd-box ">
 					   <div class="box-images">
 						  <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						  <img width="206" height="230" src="/website/img/san-pham4.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						  <img width="206" height="230" src="img/san-pham4.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						  </a>
 						  <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						  <div class="sale-off ">70%<br>OFF</div>
@@ -181,7 +156,7 @@
 					<div class="pd-box ">
 					   <div class="box-images">
 						  <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						  <img width="206" height="230" src="/website/img/san-pham5.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						  <img width="206" height="230" src="img/san-pham5.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						  </a>
 						  <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						  <div class="sale-off ">70%<br>OFF</div>
@@ -208,7 +183,7 @@
 					  <div class="pd-box ">
 						 <div class="box-images">
 							<a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-							<img width="206" height="230" src="/website/img/san-pham6.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+							<img width="206" height="230" src="img/san-pham6.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 							</a>
 							<button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 							<div class="sale-off ">70%<br>OFF</div>
@@ -228,7 +203,7 @@
 					 <div class="pd-box ">
 						<div class="box-images">
 						   <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						   <img width="206" height="230" src="/website/img/san-pham7.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						   <img width="206" height="230" src="img/san-pham7.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						   </a>
 						   <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						   <div class="sale-off ">70%<br>OFF</div>
@@ -248,7 +223,7 @@
 					 <div class="pd-box ">
 						<div class="box-images">
 						   <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						   <img width="206" height="230" src="/website/img/san-pham8.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						   <img width="206" height="230" src="img/san-pham8.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						   </a>
 						   <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						   <div class="sale-off ">70%<br>OFF</div>
@@ -268,7 +243,7 @@
 					 <div class="pd-box ">
 						<div class="box-images">
 						   <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						   <img width="206" height="230" src="/website/img/san-pham9.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						   <img width="206" height="230" src="img/san-pham9.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						   </a>
 						   <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						   <div class="sale-off ">70%<br>OFF</div>
@@ -288,7 +263,7 @@
 					 <div class="pd-box ">
 						<div class="box-images">
 						   <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						   <img width="206" height="230" src="/website/img/san-pham10.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						   <img width="206" height="230" src="img/san-pham10.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						   </a>
 						   <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						   <div class="sale-off ">70%<br>OFF</div>
@@ -315,7 +290,7 @@
 					  <div class="pd-box ">
 						 <div class="box-images">
 							<a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-							<img width="206" height="230" src="/website/img/san-pham11.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+							<img width="206" height="230" src="img/san-pham11.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 							</a>
 							<button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 							<div class="sale-off ">70%<br>OFF</div>
@@ -335,7 +310,7 @@
 					 <div class="pd-box ">
 						<div class="box-images">
 						   <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						   <img width="206" height="230" src="/website/img/san-pham12.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						   <img width="206" height="230" src="img/san-pham12.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						   </a>
 						   <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						   <div class="sale-off ">70%<br>OFF</div>
@@ -355,7 +330,7 @@
 					 <div class="pd-box ">
 						<div class="box-images">
 						   <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						   <img width="206" height="230" src="/website/img/san-pham13.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						   <img width="206" height="230" src="img/san-pham13.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						   </a>
 						   <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						   <div class="sale-off ">70%<br>OFF</div>
@@ -375,7 +350,7 @@
 					 <div class="pd-box ">
 						<div class="box-images">
 						   <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						   <img width="206" height="230" src="/website/img/san-pham15.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						   <img width="206" height="230" src="img/san-pham15.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						   </a>
 						   <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						   <div class="sale-off ">70%<br>OFF</div>
@@ -395,7 +370,7 @@
 					 <div class="pd-box ">
 						<div class="box-images">
 						   <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						   <img width="206" height="230" src="/website/img/san-pham1.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						   <img width="206" height="230" src="img/san-pham1.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						   </a>
 						   <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						   <div class="sale-off ">70%<br>OFF</div>
@@ -418,7 +393,7 @@
 	  <div class="box-banner-img" style="margin: 30px 0px;">
 		<div class="container">
 			<div class="box-banner-cover">
-                <img width="100%" height="140" alt="banner" class="img-reponsive lazy" src="/website/img/banner-min.jpg" style="">
+                <img width="100%" height="140" alt="banner" class="img-reponsive lazy" src="./img/banner-min.jpg" style="">
             </div>
 		</div>
 	  </div>
@@ -433,7 +408,7 @@
 					<div class="pd-box ">
 					   <div class="box-images">
 						  <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						  <img width="206" height="230" src="/website/img/san-pham3.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						  <img width="206" height="230" src="img/san-pham3.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						  </a>
 						  <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						  <div class="sale-off ">70%<br>OFF</div>
@@ -453,7 +428,7 @@
 				   <div class="pd-box ">
 					  <div class="box-images">
 						 <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						 <img width="206" height="230" src="/website/img/san-pham6.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						 <img width="206" height="230" src="img/san-pham6.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						 </a>
 						 <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						 <div class="sale-off ">70%<br>OFF</div>
@@ -473,7 +448,7 @@
 				   <div class="pd-box ">
 					  <div class="box-images">
 						 <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						 <img width="206" height="230" src="/website/img/san-pham2.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						 <img width="206" height="230" src="img/san-pham2.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						 </a>
 						 <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						 <div class="sale-off ">70%<br>OFF</div>
@@ -493,7 +468,7 @@
 				   <div class="pd-box ">
 					  <div class="box-images">
 						 <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						 <img width="206" height="230" src="/website/img/san-pham10.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						 <img width="206" height="230" src="img/san-pham10.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						 </a>
 						 <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						 <div class="sale-off ">70%<br>OFF</div>
@@ -513,7 +488,7 @@
 				   <div class="pd-box ">
 					  <div class="box-images">
 						 <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						 <img width="206" height="230" src="/website/img/san-pham13.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						 <img width="206" height="230" src="img/san-pham13.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						 </a>
 						 <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						 <div class="sale-off ">70%<br>OFF</div>
@@ -537,7 +512,7 @@
 					 <div class="pd-box ">
 						<div class="box-images">
 						   <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						   <img width="206" height="230" src="/website/img/san-pham7.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						   <img width="206" height="230" src="img/san-pham7.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						   </a>
 						   <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						   <div class="sale-off ">70%<br>OFF</div>
@@ -557,7 +532,7 @@
 					<div class="pd-box ">
 					   <div class="box-images">
 						  <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						  <img width="206" height="230" src="/website/img/san-pham15.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						  <img width="206" height="230" src="img/san-pham15.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						  </a>
 						  <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						  <div class="sale-off ">70%<br>OFF</div>
@@ -577,7 +552,7 @@
 					<div class="pd-box ">
 					   <div class="box-images">
 						  <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						  <img width="206" height="230" src="/website/img/san-pham1.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						  <img width="206" height="230" src="img/san-pham1.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						  </a>
 						  <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						  <div class="sale-off ">70%<br>OFF</div>
@@ -597,7 +572,7 @@
 					<div class="pd-box ">
 					   <div class="box-images">
 						  <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						  <img width="206" height="230" src="/website/img/san-pham9.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						  <img width="206" height="230" src="img/san-pham9.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						  </a>
 						  <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						  <div class="sale-off ">70%<br>OFF</div>
@@ -617,7 +592,7 @@
 					<div class="pd-box ">
 					   <div class="box-images">
 						  <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
-						  <img width="206" height="230" src="/website/img/san-pham5.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
+						  <img width="206" height="230" src="img/san-pham5.jpg" alt="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr" class="img-reponsive owl-lazy " style="opacity: 1;">
 						  </a>
 						  <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
 						  <div class="sale-off ">70%<br>OFF</div>
@@ -709,6 +684,40 @@
 		</div>
 	</footer>
    </body>
- @*  <script src="/website/js/jquery.min.js"></script>  *@
-@RenderSection("Scripts", required: false)
+   <script src="./js/jquery.min.js"></script>
+   <script>
+	$(document).ready(function(){
+		debugger;
+	  let i;
+	  let slideIndex = 0;
+	  let slides = $(".mySlides");
+	  for (i = 0; i < slides.length; i++) {
+		$(slides[i]).css("display","none");
+		slides[i].style.display = "none";  
+	  }
+	  slideIndex++;
+	  if (slideIndex > slides.length) {slideIndex = 1}    
+	  $(slides[slideIndex-1]).css("display","block");
+	 
+	})
+	// let slideIndex = 0;
+	// //showSlides();
+	
+	// function showSlides() {
+	//   let i;
+	//   let slides = document.getElementsByClassName("mySlides");
+	//   let dots = document.getElementsByClassName("dot");
+	//   for (i = 0; i < slides.length; i++) {
+	// 	slides[i].style.display = "none";  
+	//   }
+	//   slideIndex++;
+	//   if (slideIndex > slides.length) {slideIndex = 1}    
+	//   for (i = 0; i < dots.length; i++) {
+	// 	dots[i].className = dots[i].className.replace(" active", "");
+	//   }
+	//   slides[slideIndex-1].style.display = "block";  
+	//   dots[slideIndex-1].className += " active";
+	//   setTimeout(showSlides, 2000); // Change image every 2 seconds
+	// }
+	</script>
 </html>
