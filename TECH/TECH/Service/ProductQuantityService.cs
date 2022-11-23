@@ -18,6 +18,7 @@ namespace TECH.Service
         bool Deleted(List<int> ids);
         List<QuantityProductModelView> GetProductQuantity(int productId);
         void Save();
+        PagedResult<QuantityProductModelView> GetAllPaging(ProductQuantityViewModelSearch productQuantityViewModelSearch);
     }
 
     public class ProductQuantityService : IProductQuantityService
@@ -134,6 +135,47 @@ namespace TECH.Service
 
             return false;
         }
-       
+
+        public PagedResult<QuantityProductModelView> GetAllPaging(ProductQuantityViewModelSearch ProductModelViewSearch)
+        {
+            try
+            {
+                var query = _productQuantityRepository.FindAll();
+
+                if (ProductModelViewSearch.productId > 0)
+                {
+                    query = query.Where(c => c.product_id == ProductModelViewSearch.productId);
+                }
+
+                int totalRow = query.Count();
+                query = query.Skip((ProductModelViewSearch.PageIndex - 1) * ProductModelViewSearch.PageSize).Take(ProductModelViewSearch.PageSize);
+                var data = query.Select(p => new QuantityProductModelView()
+                {
+                    id = p.id,
+                    product_id = p.product_id,
+                    color_id = p.color_id,
+                    totalimport = p.totalimport,
+                    status = p.status,
+                    priceimprot = p.priceimprot,
+                    pricesell = p.pricesell,
+                    totalsell = p.totalsell,
+                    totalinventory = p.totalinventory,                     
+                }).ToList();
+
+                var pagingData = new PagedResult<QuantityProductModelView>
+                {
+                    Results = data,
+                    CurrentPage = ProductModelViewSearch.PageIndex,
+                    PageSize = ProductModelViewSearch.PageSize,
+                    RowCount = totalRow,
+                };
+                return pagingData;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
     }
 }

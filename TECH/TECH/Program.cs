@@ -191,6 +191,12 @@ app.UseEndpoints(endpoints =>
      pattern: "admin/chi-tiet-don-hang/{*orderId}",
      defaults: new { controller = "Orders", action = "OderDetail" });
 
+    endpoints.MapAreaControllerRoute(
+    name: "quanlysoluong",
+    areaName: "Admin",
+    pattern: "admin/quan-ly-so-luong/{*productId}",
+    defaults: new { controller = "ProductQuantity", action = "Index" });
+
 
 
 

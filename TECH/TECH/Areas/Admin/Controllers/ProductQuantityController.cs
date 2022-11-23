@@ -12,8 +12,14 @@ namespace TECH.Areas.Admin.Controllers
         {
             _productQuantityService = productQuantityService;
         }
-        public IActionResult Index()
+        public IActionResult Index(int productId)
         {
+            return View();
+        }
+
+        public IActionResult QuantityProduct(int productid)
+        {
+            
             return View();
         }
 
@@ -106,7 +112,7 @@ namespace TECH.Areas.Admin.Controllers
             return Json(new
             {
                 success = false
-            }); ;
+            });
         }
 
     }
