@@ -27,8 +27,9 @@ namespace TECH.Data.DatabaseEntity
         public string? trademark { get; set; }        
 
         [Column(TypeName = "nvarchar(max)")]
-        public string? description { get; set; }        
-        
+        public string? description { get; set; }
+        [Column(TypeName = "nvarchar(max)")]
+        public string? promotion { get; set; }
         public int? status { get; set; }     
     }
 }
