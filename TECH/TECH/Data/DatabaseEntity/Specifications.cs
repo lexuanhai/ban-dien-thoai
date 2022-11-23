@@ -12,8 +12,8 @@ namespace TECH.Data.DatabaseEntity
     {
         [Column(TypeName = "nvarchar(250)")]
         public string? name { get; set; }
-        public int? category_id { get; set; }
-        [ForeignKey("category_id")]
+        public int? specificationscategory_id { get; set; }
+        [ForeignKey("specificationscategory_id")]
         public SpecificationsCategory? SpecificationsCategory { get; set; }
         public int? product_id { get; set; }
         [ForeignKey("product_id")]

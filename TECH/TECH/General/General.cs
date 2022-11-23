@@ -22,5 +22,9 @@ namespace TECH.General
             Hide = 2, // Trả lại hàng
             Wait = 3
         }
+        public enum SpecificationsCategory
+        {
+            CommodityInformation = 1
+        }
     }
 }

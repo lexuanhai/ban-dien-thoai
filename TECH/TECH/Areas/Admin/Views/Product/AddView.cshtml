@@ -7,7 +7,7 @@
         color: #f00;
     }
 
-    input.error {
+    input.error,select.error {
         border-color: #f00 !important;
     }
 
@@ -98,7 +98,7 @@
                                     <div class="row">
                                           <div class="col-4 mb-2">
                                             <div class="form-group">
-                                                <label for="first-name-vertical">Danh mục sản phẩm <span class="required">(*)</span></label>
+                                                <label for="productcategoryid">Danh mục sản phẩm <span class="required">(*)</span></label>
                                                 <select name="productcategoryid" id="productcategoryid" class="form-select">
                                                     <option value="" selected="selected" disabled="disabled">Chọn danh mục sản phẩm</option>
                                                     <option value="4">
@@ -128,9 +128,9 @@
                                         </div>
                                         <div class="col-4 mb-2">
                                             <div class="form-group">
-                                                <label for="first-name-vertical">Thương hiệu <span class="required">(*)</span></label>
-                                                <select name="productcategoryid" id="producttrademark" class="form-select">
-                                                    <option value="" selected="selected" disabled="disabled">Chọn thương hiệu</option>
+                                                <label for="producttrademark">Hãng sản xuất <span class="required">(*)</span></label>
+                                                <select name="producttrademark" id="producttrademark" class="form-select">
+                                                    <option value="" selected="selected" disabled="disabled">Chọn hãng sản xuất</option>
                                                     <option value="4">
                                                         AirPod
                                                     </option>
@@ -140,7 +140,7 @@
                                         </div>
                                            <div class="col-4 mb-2">
                                             <div class="form-group">
-                                                <label for="first-name-vertical">Trạng thái <span class="required">(*)</span></label>
+                                                <label for="productcategoryid">Trạng thái <span class="required">(*)</span></label>
                                                 <select name="productcategoryid" id="productstatus" class="form-select">
                                                     <option value="" selected="selected" disabled="disabled">Chọn trạng thái</option>
                                                     <option value="1"> Sản phẩm mới</option>
@@ -155,60 +155,54 @@
                                     <div class="row">
                                         <div class="col-4 mb-2">
                                             <div class="form-group">
-                                                <label for="validationTooltipUsername">Giá tiền nhập sản phẩm <span class="required">(*)</span></label>
+                                                <label for="percent_price"> Phần trăm giá giảm </label>
                                                 <div class="" style="position: relative;">
-                                                    <input type="text" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productpriceimport" id="productpriceimport" class="form-control">
-                                                    <div class=""><span style="position: absolute; top: 0; right: 0;" id="validationTooltipUsernamePrepend" class="input-group-text">đ</span></div>
+                                                    <input type="number" min="0" max="100" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="percent_price" id="percent_price" class="form-control">                                                  
                                                 </div>
                                                 <!---->
                                             </div>
                                         </div>
                                         <div class="col-4 mb-2">
                                             <div class="form-group">
-                                                <label for="validationTooltipUsername">Giá tiền bán sản phẩm <span class="required">(*)</span></label>
+                                                <label for="insurance">Bảo hành <span class="required">(*)</span></label>
                                                 <div class="" style="position: relative;">
-                                                    <input type="text" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productpricesell" id="productpricesell" class="form-control">
-                                                    <div class=""><span style="position: absolute; top: 0; right: 0;" id="validationTooltipUsernamePrepend" class="input-group-text">đ</span></div>
+                                                    <input type="text"  name="insurance" id="insurance" class="form-control">                                                    
                                                 </div>
                                                 <!---->
-                                            </div>
+                                            </div>                                          
                                         </div>
                                         <div class="col-4 mb-2">
                                             <div class="form-group">
-                                                <label for="validationTooltipUsername">Giá tiền giảm sản phẩm</label>
-                                                <div class="" style="position: relative;">
-                                                    <input type="text" placeholder="1.000" aria-describedby="validationTooltipUsernamePrepend" name="productreduced" id="productreduced" class="form-control">
-                                                    <div class=""><span style="position: absolute; top: 0; right: 0;" id="validationTooltipUsernamePrepend" class="input-group-text">đ</span></div>
-                                                </div>
+                                                <label for="commodities">Loại hàng hóa <span class="required">(*)</span></label>
+                                                <select name="commodities" id="commodities" class="form-select">
+                                                    <option value="" selected="selected" disabled="disabled">Chọn loại hàng hóa</option>
+                                                    <option value="1"> Chính hãng</option>
+                                                    <option value="2"> Máy test 99%</option>
+                                                    <option value="3"> Máy cũ trên 95%</option>
+                                                    <option value="4"> Máy cũ 60-80% </option>
+                                                </select>
                                                 <!---->
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-12 mb-2">
-                                            <div class="form-group product-images">
-                                                <label style="display: block">Hình ảnh <span class="required">(*)</span></label>
-                                                <input type="file" id="productimages" name="productimages" class="form-control filesImages" multiple style="display:none"> <!----> <!---->
-                                                <label class="box-image" for="productimages"></label>   
-                                                <div class="productimages"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @*<div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label for="contact-info-vertical">Mô tả ngắn <span class="required">(*)</span></label>
-                                                <textarea name="productshort_desc" id="productshort_desc" rows="3" placeholder="..." class="form-control"></textarea>
+                                                <label for="contact-info-vertical">Khuyến mãi</label>
+                                                <div class="ckeditor">
+                                                    <textarea name="promotion" id="promotion" rows="6" placeholder="Mô tả chi tiết khuyễn mãi"></textarea>
+                                                </div>
                                                 <!---->
                                             </div>
                                         </div>
-                                    </div>*@
+                                    </div>
+
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="contact-info-vertical">Mô tả <span class="required">(*)</span></label>
                                                 <div class="ckeditor">
-                                                    <textarea name="productdescription" id="productdescription" rows="6" placeholder="Mô tả chi tiết sản phẩm"></textarea>
+                                                    <textarea name="productdescription" id="productdescription" rows="15" placeholder="Mô tả chi tiết sản phẩm"></textarea>
                                                 </div>
                                                 <!---->
                                             </div>

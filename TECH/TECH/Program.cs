@@ -46,7 +46,11 @@ builder.Services.AddScoped<IProductsImageRepository, ProductsImageRepository>();
 builder.Services.AddScoped<IColorsRepository, ColorsRepository>();
 builder.Services.AddScoped<ISizesRepository, SizesRepository>();
 builder.Services.AddScoped<IProductQuantityRepository, ProductQuantityRepository>();
+builder.Services.AddScoped<IColorImagesRepository, ColorImagesRepository>();
+builder.Services.AddScoped<IManufacturerRepository, ManufacturerRepository>();
 
+builder.Services.AddScoped<IColorImagesService, ColorImagesService>();
+builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
 builder.Services.AddScoped<IProductQuantityService, ProductQuantityService>();
 builder.Services.AddScoped<IColorsService, ColorsService>();
 builder.Services.AddScoped<ISizesService, SizesService>();

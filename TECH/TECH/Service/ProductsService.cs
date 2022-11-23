@@ -80,16 +80,14 @@ namespace TECH.Service
                     var products = new Products
                     {
                         name = view.name,
-                        //avatar = view.avatar,
                         category_id = view.category_id,
-                        //slug = Regex.Replace(view.name.ToLower(), @"\s+", "-"),
-                        //color = view.color,
-                        price_sell = view.price_sell,
-                        price_import = view.price_import,
-                        price_reduced = view.price_reduced,
                         status = view.status,
                         trademark = view.trademark,
+                        commodities = view.commodities,
+                        percent_price = view.percent_price,
+                        promotion = view.promotion,
                         description = view.description,
+                        insurance = view.insurance
                     };
                     _productsRepository.Add(products);
                     Save();

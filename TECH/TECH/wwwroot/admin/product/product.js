@@ -27,7 +27,9 @@
         status: "",
         endow: "",
         type: "",
-        differentiate: ""
+        differentiate: "",
+        promotion: "",
+        commodities:""
     }
     self.ProductSearch = {
         name: "",
@@ -601,10 +603,9 @@
             },
             success: function (response) {
                 if (response.success) {
-                    if (self.ProductImages != null && self.ProductImages != "") {
-                        self.UploadFileImageProduct(response.id);
-                    }
-
+                    //if (self.ProductImages != null && self.ProductImages != "") {
+                    //    self.UploadFileImageProduct(response.id);
+                    //}
                     tedu.notify('Thêm mới dữ liệu thành công', 'success');
                     self.GetDataPaging(true);
                     window.location.href = '/admin/quan-ly-san-pham';
@@ -710,16 +711,15 @@
                 productstatus: {
                     required: true
                 },
-                productpricesell: {
-                    required: true
-                },
-                productpriceimport: {
-                    required: true
-                },
                 productdescription: {
                     ckrequired: true
+                },
+                insurance: {
+                    required: true
+                },
+                commodities: {
+                    required: true
                 }
-
             },
             messages:
             {
@@ -730,19 +730,19 @@
                     required: "Bạn chưa chọn trạng thái sản phẩm",
                 },
                 producttrademark: {
-                    required: "Bạn chưa nhập thương hiệu sản phẩm",
+                    required: "Bạn chưa nhập hãng sản xuất",
                 },
                 productcategoryid: {
                     required: "Bạn chưa chọn danh mục sản phẩm",
                 },
-                productpricesell: {
-                    required: "Bạn chưa nhập giá bán sản phẩm"
-                },
-                productpriceimport: {
-                    required: "Bạn chưa nhập giá nhập sản phẩm"
+                insurance: {
+                    required: "Bạn chưa nhập bảo hành"
                 },
                 productdescription: {
                     ckrequired: "Bạn chưa nhập mô tả sản phẩm"
+                },
+                commodities: {
+                    required: "Bạn chưa chọn loại hàng hóa",
                 }
             },
             submitHandler: function (form) {
@@ -750,12 +750,12 @@
                 self.GetValue();
                 if (self.IsUpdate) {
                     self.Update(self.Product);
-                    if (self.ProductImages != null && self.ProductImages != "") {
-                        self.UploadFileImageProduct(self.Product.id);
-                    }
-                    if (self.ProductUpdateImage != null && self.ProductUpdateImage.length > 0) {
-                        self.RemoveImageServer(self.ProductUpdateImage);
-                    }
+                    //if (self.ProductImages != null && self.ProductImages != "") {
+                    //    self.UploadFileImageProduct(self.Product.id);
+                    //}
+                    //if (self.ProductUpdateImage != null && self.ProductUpdateImage.length > 0) {
+                    //    self.RemoveImageServer(self.ProductUpdateImage);
+                    //}
                 }
                 else {
                     self.AddProduct(self.Product);
@@ -788,16 +788,13 @@
     self.GetValue = function () {
         self.Product.name = $("#productname").val();
         self.Product.category_id = $("#productcategoryid").val();
-
-        //if (self.ProductImages != null && self.ProductImages.name != null && self.ProductImages.name != "") {
-        //    self.Product.avatar = self.ProductImages.name;
-        //}
-        self.Product.price_sell = $("#productpricesell").val();
-        self.Product.price_reduced = $("#productreduced").val();
-        self.Product.price_import = $("#productpriceimport").val();
+        self.Product.percent_price = $("#percent_price").val();
+        
         self.Product.trademark = $("#producttrademark").val();
         self.Product.status = $("#productstatus").val();
+        self.Product.commodities = $("#commodities").val(); 
         self.Product.description = CKEDITOR.instances.productdescription.getData();
+        self.Product.promotion = CKEDITOR.instances.promotion.getData();
     }
 
     self.RenderHtmlByObject = function (view) {
@@ -899,7 +896,7 @@
         self.GetAllCategories();
 
         CKEDITOR.replace('productdescription', {});
-      /*  CKEDITOR.replace('productspecifications', {});*/
+        CKEDITOR.replace('promotion', {});
 
         $(".modal").on("hidden.bs.modal", function () {
             $(this).find('form').trigger('reset');

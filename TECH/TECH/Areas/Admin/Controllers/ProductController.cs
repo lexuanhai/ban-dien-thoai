@@ -242,20 +242,20 @@ namespace TECH.Areas.Admin.Controllers
             bool isNameExist = false;
             if (ProductModelView != null && !string.IsNullOrEmpty(ProductModelView.name))
             {
-                isNameExist = _productsService.IsProductNameExist(ProductModelView.name);                
+                isNameExist = _productsService.IsProductNameExist(ProductModelView.name);
             }
 
             if (!isNameExist)
             {
                 var result = _productsService.Add(ProductModelView);
-                if (result > 0 )
-                {                    
+                if (result > 0)
+                {
                     return Json(new
                     {
                         success = result,
-                        id= result
+                        id = result
                     });
-                }                
+                }
             }
             return Json(new
             {

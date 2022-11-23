@@ -13,8 +13,6 @@ namespace TECH.Areas.Admin.Models
         public string? categorystr { get; set; }
         public string? name { get; set; }
 
-        public string? slug { get; set; }
-
         public string? avatar { get; set; }
 
         public decimal? price { get; set; }
@@ -22,8 +20,6 @@ namespace TECH.Areas.Admin.Models
         public string? color { get; set; }
 
         public int quantity { get; set; }
-
-        public string? short_desc { get; set; }
 
         public string? description { get; set; }
 
@@ -33,7 +29,6 @@ namespace TECH.Areas.Admin.Models
 
         public int? status { get; set; }
 
-        public int? type { get; set; }
         public int? differentiate { get; set; } // hàng mới hay cũ
 
         public int total_product { get; set; }
@@ -53,6 +48,13 @@ namespace TECH.Areas.Admin.Models
 
         public List<ImageModelView> ImageModelView { get; set; }
         public string? trademark { get; set; }
+
+        // 23/11 update start
+        public string? promotion { get; set; }
+        public int? percent_price { get; set; }
+        public string? insurance { get; set; }
+        public int? commodities { get; set; }
+        // 23/11 update end
 
 
     }

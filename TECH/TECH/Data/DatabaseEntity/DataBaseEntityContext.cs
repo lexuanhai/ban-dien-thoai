@@ -31,6 +31,11 @@ namespace TECH.Data.DatabaseEntity
         public DbSet<Carts> carts { set; get; }
         public DbSet<Siders> siders { set; get; }
         public DbSet<Advertisement> advertisement { set; get; }
+        public DbSet<Manufacturer> manufacturer { set; get; }
+        // khi update xong phần color, image, quantity sẽ quay lại phần thông số kỹ thuật         
+        //public DbSet<Specifications> specifications { set; get; }
+        //public DbSet<SpecificationsCategory> specificationscategory { set; get; }
+        public DbSet<ColorImages> colorimages { set; get; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);            

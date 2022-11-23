@@ -15,6 +15,12 @@ namespace TECH.Data.DatabaseEntity
         public int? category_id { get; set; }
         [ForeignKey("category_id")]
         public Category? Category { get; set; }
+
+        public int? manufacturer_id { get; set; }
+        [ForeignKey("manufacturer_id")]
+        public Manufacturer? Manufacturer { get; set; }
+
+
         [Column(TypeName = "decimal(18,0)")]
         public decimal? price_sell { get; set; }
 
@@ -30,6 +36,11 @@ namespace TECH.Data.DatabaseEntity
         public string? description { get; set; }
         [Column(TypeName = "nvarchar(max)")]
         public string? promotion { get; set; }
-        public int? status { get; set; }     
+        public int? percent_price { get; set; }
+        public int? status { get; set; }
+        [Column(TypeName = "nvarchar(max)")]
+        public string? insurance { get; set; }
+        public int? commodities { get; set; } // loại hàng hóa thể hiện là hàng chính hãng, hay là hàng cũ(%), hay là hàng lỗi kỹ thuật
+
     }
 }

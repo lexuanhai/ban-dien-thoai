@@ -18,8 +18,8 @@ namespace TECH.Data.DatabaseEntity
         [ForeignKey("color_id")]
         public Colors? Colors { get; set; }
 
-        //public int? size_id { get; set; }
-        //[ForeignKey("size_id")]
+        public int? size_id { get; set; }
+        [ForeignKey("size_id")]
         public Size? size { get; set; }
         public int? totalimport { get; set; }
 
