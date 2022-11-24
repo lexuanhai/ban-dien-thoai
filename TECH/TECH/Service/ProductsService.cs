@@ -32,11 +32,14 @@ namespace TECH.Service
     public class ProductsService : IProductsService
     {
         private readonly IProductsRepository _productsRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private IUnitOfWork _unitOfWork;
         public ProductsService(IProductsRepository productsRepository,
+            ICategoryRepository categoryRepository,
             IUnitOfWork unitOfWork)
         {
             _productsRepository = productsRepository;
+            _categoryRepository = categoryRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -51,11 +54,25 @@ namespace TECH.Service
         {
             var data = _productsRepository.FindAll(p => p.id == id).FirstOrDefault();
             if (data != null)
-            {                
+            {
+                var dataCategory = new CategoryModelView();
+                if (data.category_id.HasValue && data.category_id.Value > 0)
+                {
+                    var category = _categoryRepository.FindAll(c => c.id == data.category_id.Value).Select(c => new CategoryModelView()
+                    {
+                        id = c.id,
+                        name = c.name
+                    }).FirstOrDefault();
+                    if (category != null)
+                    {
+                        dataCategory = category;
+                    }
+                }
                 var model = new ProductModelView()
                 {
                     id = data.id,
                     name = data.name,
+                    Category = dataCategory,
                     category_id = data.category_id,
                     trademark = !string.IsNullOrEmpty(data.trademark) ? data.trademark : "",
                     price_sell = data.price_sell.Value,

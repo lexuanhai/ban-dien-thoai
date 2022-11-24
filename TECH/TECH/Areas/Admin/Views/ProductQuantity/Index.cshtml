@@ -36,6 +36,7 @@
     }
     .custom-button{
             margin-bottom: 5px;
+        padding: 4px;
         }
 
           .required {
@@ -119,7 +120,9 @@
             <div  class="card-header">
                 <div  class="row">
                     <div  class="col-md-6">Danh sách các sản phẩm</div>
-                    <div  class="col-md-6">
+                    <div class="col-md-6"> <button type="button" class="btn btn-primary btn-right btn-addorupdate" style="float:right">
+                            <span style="display: flex;  align-items: center;"><i class="bi bi-plus-circle"></i> <span style="margin-left: 6px; padding-top: 2px;"> Tạo mới</span></span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -155,13 +158,12 @@
                         <thead>
                             <tr>
                                 <th style="width:3%">STT</th>
-                                <th width="10%">Tên sản phẩm</th>
+                                <th width="16%">Tên sản phẩm</th>
                                 <th width="10%">Dung lượng </th>
-                                <th width="10%">Màu sắc</th>
-                                <th width="10%">Hình ảnh</th>                                                               
+                                <th width="10%">Màu sắc</th>                                                           
                                 <th width="10%">Giá nhập</th>
                                 <th width="10%">Giá bán</th>
-                                <th width="10%">Tống số nhập</th>
+                                <th width="11%">Tống số nhập</th>
                                 <th width="10%">Tống số bán</th>
                                 <th width="10%">Tống số tồn</th>
                                 <th style="text-align: center;" width="10%">Thao tác</th>
@@ -187,10 +189,10 @@
 @*   <partial name="UpdateView" />
    <partial name="_Quantity" />*@
 
-@*@section Scripts{
+@section Scripts{
         <script src="~/admin/plugins/jquery-validation/jquery.validate.min.js"></script>       
         <script src="~/admin/product-quantity/product-quantity.js?v=@DateTime.Now.Ticks"></script>
-    }*@
+    }
 
 
 

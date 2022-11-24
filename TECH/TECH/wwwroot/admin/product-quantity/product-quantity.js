@@ -12,6 +12,15 @@
     self.ListUpdateQuantity = [];
     self.ListDeletedQuantity = [];
     self.Colors = [];
+    self.QuantityEnity = {
+        product_id:0,
+        color_id: 0,
+        totalimport: 0,
+        priceimprot: 0,
+        pricesell: 0,
+        totalsell: 0,
+        capacity:""
+    };
     // quantity end
     self.Product = {
         id: null,
@@ -55,23 +64,23 @@
                 var item = data[i];
                 html += "<tr>";
                 html += "<td>" + (++index) + "</td>";
-                if (item.avatar != null) {
-                    html += "<td> <img src=/product-image/" + item.avatar + " class=\"item-image\" /></td>";
-                } else {
-                    html += "<td> <img src=/image-default/default.png class=\"item-image\" /></td>";
-                }
-                html += "<td>" + item.name + "</td>";
-                html += "<td>" + item.categorystr + "</td>";
-                html += "<td>" + item.trademark + "</td>";
-                html += "<td>" + item.price_sell_str + "</td>";
-                html += "<td>" + item.price_import_str + "</td>";
-                html += "<td>" + item.price_reduced_str + "</td>";
-                html += "<td>" + item.price_reduced_str + "</td>";
+                //if (item.avatar != null) {
+                //    html += "<td> <img src=/product-image/" + item.avatar + " class=\"item-image\" /></td>";
+                //} else {
+                //    html += "<td> <img src=/image-default/default.png class=\"item-image\" /></td>";
+                //}
+                html += "<td>" + (item.Product != null && item.Product.name != "" ?item.Product.name:"") + "</td>";
+                html += "<td>" + (item.capacity != null ? item.capacity : "") + "</td>";
+                html += "<td>" + (item.Colors != null && item.Colors.name != "" ? item.Colors.name : "") + "</td>";
+                html += "<td>" + item.priceimprotstr + "</td>";
+                html += "<td>" + item.pricesellstr + "</td>";
+                html += "<td>" + (item.totalimport != null ? item.totalimport:"") + "</td>";
+                html += "<td>" + (item.totalsell != null ? item.totalsell:"") + "</td>";
+                html += "<td>" + (item.totalinventory != null ? item.totalinventory:"" ) + "</td>";
                 html += "<td style=\"text-align: center;\">" +
 
                     (item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye custom-icon\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash custom-icon\"></i></button>") +
-                    "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateView(" + item.id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +
-                    "<button  class=\"btn btn-success custom-button\" onClick=\"Quantity(" + item.id + ")\"><i  class=\"bi bi-calculator custom-icon\"></i></button>" +
+                    "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateView(" + item.id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +                   
                     "<button  class=\"btn btn-danger custom-button\" onClick=\"Deleted(" + item.id + ")\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
 
                     "</td>";
@@ -88,187 +97,85 @@
     // Quantity start
     self.InitQuantity = function () {
         self.GetColor();
-        self.GetSize();
+       /* self.GetSize();*/
         $(".btn-create-row-quantity").click(function () {
             var html = self.AddRowHtml();
             $("#quantity #tblData").append(html);
             $(".no-data").hide();
         });
-        $("#form-submit-quantity").on("submit", function (e) {
-            e.preventDefault();
-            var lstAddQuantity = self.GetQuantityView("new");
-            if (lstAddQuantity != null && lstAddQuantity.length > 0) {
-                self.AddQuantity(lstAddQuantity);
-            }
-            if (self.ListUpdateQuantity != null && self.ListUpdateQuantity.length > 0) {
-                var lstUpdateQuantity = [];
-                for (var i = 0; i < self.ListUpdateQuantity.length; i++) {
-                    var item = self.ListUpdateQuantity[i];
-                    var quantityView = self.GetQuantityView(item.toString());
-                    if (quantityView != null) {
-                        lstUpdateQuantity.push(quantityView);
-                    }
-                }
-                if (lstUpdateQuantity != null && lstUpdateQuantity.length > 0) {
-                    console.log(lstUpdateQuantity);
-                    self.UpdateServerQuantity(lstUpdateQuantity);
-                }
-            }
-            if (self.ListDeletedQuantity != null && self.ListDeletedQuantity.length > 0) {
-                self.DeletedServerQuantity(self.ListDeletedQuantity);
-            }
-        })
-    }
-    self.GetQuantityView = function (className) {
-        if (className == "new") {
-            var lstAddQuantity = [];
-            var classNameCustom = "#quantity #tblData " + "." + className;
-            $(classNameCustom).each(function () {
-                var id = $(this).attr("data-quantity");
-                if (id != null && id != "") {
-                    id = parseInt(id);
-                }
-                var color = $(this).find(".colors").val();
-                if (color != null && color != "") {
-                    color = parseInt(color);
-                }
-                var size = $(this).find(".sizes").val();
-                if (size != null && size != "") {
-                    size = parseInt(size);
-                }
-                var totalimport = $(this).find(".totalimport").val();
-                if (totalimport != null && totalimport != "") {
-                    totalimport = parseInt(totalimport);
-                }
-                lstAddQuantity.push({
-                    Id: id,
-                    AppSizeId: size,
-                    ColorId: color,
-                    TotalImported: totalimport,
-                    ProductId: self.ProductIdQuantity
-                });
-            });
-            return lstAddQuantity;
-        }
-        else {
-            var lstAddQuantity = {
-                Id: 0,
-                AppSizeId: 0,
-                ColorId: 0,
-                TotalImported: 0,
-                ProductId: 0
-            };
-            var classNameCustom = "#quantity #tblData " + "." + className;
-            var id = $(classNameCustom).attr("data-quantity");
-            if (id != null && id != "") {
-                id = parseInt(id);
-            }
-            var color = $(classNameCustom).find(".colors").val();
-            if (color != null && color != "") {
-                color = parseInt(color);
-            }
-            var size = $(classNameCustom).find(".sizes").val();
-            if (size != null && size != "") {
-                size = parseInt(size);
-            }
-            var totalimport = $(classNameCustom).find(".totalimport").val();
-            if (totalimport != null && totalimport != "") {
-                totalimport = parseInt(totalimport);
-            }
-            lstAddQuantity = {
-                Id: id,
-                AppSizeId: size,
-                ColorId: color,
-                TotalImported: totalimport,
-                ProductId: self.ProductIdQuantity
-            };
-            return lstAddQuantity;
-        }
 
+        self.ValidateQuanity();
     }
-    self.AddRowHtml = function () {
-        var index = 0;
-        var html = "<tr class=\"new\">";
-        html += "<td>" + (++index) + "</td>";
-        html += "<td>" + self.GetColorByIdOrAll(0) + "</td>";
-        html += "<td>" + self.GetSizeByIdOrAll(0) + "</td>";
-        html += "<td><input type=\"number\" class=\"form-control totalimport\" min=\"0\" required></td>";
-        html += "<td style=\"text-align: center;\">" +
-            /* "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateView()\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +*/
-            "<button  class=\"btn btn-danger custom-button\" onClick=\"DeletedHtml(this)\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
-            "</td>";
-        html += "</tr>";
-        return html;
-    }
+  
     self.DeletedHtml = function (tag) {
         $(tag).closest(".new").remove();
     }
-    self.GetProductQuantityForProductId = function (productId) {
-        $.ajax({
-            url: '/Admin/ProductQuantity/GetProductQuantityForProductId',
-            type: 'GET',
-            data: {
-                productId: productId
-            },
-            dataType: 'json',
-            beforeSend: function () {
-            },
-            complete: function () {
-            },
-            success: function (response) {
-                self.ProductQuantityRenderTableHtml(response.Data);
-            }
-        });
-    };
+    //self.GetProductQuantityForProductId = function (productId) {
+    //    $.ajax({
+    //        url: '/Admin/ProductQuantity/GetProductQuantityForProductId',
+    //        type: 'GET',
+    //        data: {
+    //            productId: productId
+    //        },
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //        },
+    //        complete: function () {
+    //        },
+    //        success: function (response) {
+    //            self.ProductQuantityRenderTableHtml(response.Data);
+    //        }
+    //    });
+    //};
 
-    self.ProductQuantityRenderTableHtml = function (data) {
-        var html = "";
-        if (data != "" && data.length > 0) {
-            var index = 0;
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-                html += "<tr data-quantity=" + item.Id + " class=" + item.Id + ">";
-                html += "<td>" + (++index) + "</td>";
-                html += "<td>" + self.GetColorByIdOrAll(item.ColorId, true) + "</td>";
-                html += "<td>" + self.GetSizeByIdOrAll(item.AppSizeId, true) + "</td>";
-                html += "<td><input type=\"number\" class=\"form-control totalimport\" min=\"0\" required value=" + item.TotalImported + " disabled></td>";
-                html += "<td style=\"text-align: center;\">" +
-                    "<button type=\"button\" class=\"btn btn-primary custom-button\" onClick=\"UpdateQuantity(" + item.Id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +
-                    "<button type=\"button\" class=\"btn btn-danger custom-button\" onClick=\"DeletedQuantity(" + item.Id + ")\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
-                    "</td>";
-                html += "</tr>";
-            }
-        }
-        else {
-            html += "<tr class=\"no-data\"><td colspan=\"10\" style=\"text-align:center\">Không có dữ liệu</td></tr>";
-        }
-        $("#quantity #tblData").html(html);
-        $('#quantity').modal('show');
-    };
-    self.UpdateQuantity = function (id) {
-        if (id > 0) {
-            self.ListUpdateQuantity.push(id);
-            var classNameSelect = "." + id.toString() + " select";
-            var classNameInput = "." + id.toString() + " .totalimport";
-            var className = classNameSelect + "," + classNameInput;
-            $(className).removeAttr('disabled');
-        }
-    }
-    self.DeletedQuantity = function (id) {
-        if (id > 0) {
-            self.ListDeletedQuantity.push(id);
-            var className = "." + id.toString();
-            $(className).remove();
-        }
-    }
+    //self.ProductQuantityRenderTableHtml = function (data) {
+    //    var html = "";
+    //    if (data != "" && data.length > 0) {
+    //        var index = 0;
+    //        for (var i = 0; i < data.length; i++) {
+    //            var item = data[i];
+    //            html += "<tr data-quantity=" + item.Id + " class=" + item.Id + ">";
+    //            html += "<td>" + (++index) + "</td>";
+    //            html += "<td>" + self.GetColorByIdOrAll(item.ColorId, true) + "</td>";
+    //            html += "<td>" + self.GetSizeByIdOrAll(item.AppSizeId, true) + "</td>";
+    //            html += "<td><input type=\"number\" class=\"form-control totalimport\" min=\"0\" required value=" + item.TotalImported + " disabled></td>";
+    //            html += "<td style=\"text-align: center;\">" +
+    //                "<button type=\"button\" class=\"btn btn-primary custom-button\" onClick=\"UpdateQuantity(" + item.Id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +
+    //                "<button type=\"button\" class=\"btn btn-danger custom-button\" onClick=\"DeletedQuantity(" + item.Id + ")\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
+    //                "</td>";
+    //            html += "</tr>";
+    //        }
+    //    }
+    //    else {
+    //        html += "<tr class=\"no-data\"><td colspan=\"10\" style=\"text-align:center\">Không có dữ liệu</td></tr>";
+    //    }
+    //    $("#quantity #tblData").html(html);
+    //    $('#quantity').modal('show');
+    //};
+    //self.UpdateQuantity = function (id) {
+    //    if (id > 0) {
+    //        self.ListUpdateQuantity.push(id);
+    //        var classNameSelect = "." + id.toString() + " select";
+    //        var classNameInput = "." + id.toString() + " .totalimport";
+    //        var className = classNameSelect + "," + classNameInput;
+    //        $(className).removeAttr('disabled');
+    //    }
+    //}
+    //self.DeletedQuantity = function (id) {
+    //    if (id > 0) {
+    //        self.ListDeletedQuantity.push(id);
+    //        var className = "." + id.toString();
+    //        $(className).remove();
+    //    }
+    //}
     self.GetColorByIdOrAll = function (colorId, isRenderAPI) {
         var html = "";
-        if (isRenderAPI) {
-            html = "<select class=\"form-select colors\" required disabled><option value=\"\"> Chọn màu </option>";
-        }
-        else {
-            html = "<select class=\"form-select colors\" required><option value=\"\"> Chọn màu </option>";
-        }
+        //if (isRenderAPI) {
+        //    html = "<select class=\"form-select colors\" required disabled><option value=\"\"> Chọn màu </option>";
+        //}
+        //else {
+        //    html = "<select class=\"form-select colors\" required><option value=\"\"> Chọn màu </option>";
+        //}
         if (self.Colors != null && self.Colors.length > 0) {
             for (var i = 0; i < self.Colors.length; i++) {
                 var item = self.Colors[i];
@@ -320,30 +227,66 @@
 
                 if (response.Data != null && response.Data.length > 0) {
                     self.Colors = response.Data;
+                    var html = self.GetColorByIdOrAll(0);
+                    $("#selectcolor").append(html);
                 }
             }
         });
     };
 
-    self.GetSize = function () {
-        $.ajax({
-            url: '/Admin/Sizes/GetAll',
-            type: 'GET',
-            dataType: 'json',
-            beforeSend: function () {
+    self.ValidateQuanity = function () {
+
+        $("#form-submit").validate({
+            rules:
+            {
+                color_id: {
+                    required: true,
+                },
+                totalimport: {
+                    required: true,
+                },
+                priceimprot: {
+                    required: true
+                },
+                totalsell: {
+                    required: true
+                }
             },
-            complete: function () {
+            messages:
+            {
+                color_id: {
+                    required: "Bạn chưa chọn màu sắc",
+                },
+                totalimport: {
+                    required: "Bạn chưa nhập giá nhập",
+                },
+                priceimprot: {
+                    required: "Bạn chưa nhập giá bán nhập",
+                },
+                totalsell: {
+                    required: "Bạn chưa nhập dung lượng lưu trữ",
+                },
             },
-            success: function (response) {
-                if (response.Data != null && response.Data.length > 0) {
-                    self.Sizes = response.Data;
+            submitHandler: function (form) {
+                self.GetValue();
+                if (self.IsUpdate) {
+                    self.Update(self.Product);
+                    if (self.ProductImages != null && self.ProductImages != "") {
+                        self.UploadFileImageProduct(self.Product.id);
+                    }
+                    if (self.ProductUpdateImage != null && self.ProductUpdateImage.length > 0) {
+                        self.RemoveImageServer(self.ProductUpdateImage);
+                    }
+                }
+                else {
+                    self.AddQuantity(self.QuantityEnity);
                 }
             }
         });
-
-    };
+    }
 
     self.AddQuantity = function (_quantities) {
+       
         $.ajax({
             url: '/Admin/ProductQuantity/Add',
             type: 'POST',
@@ -359,17 +302,22 @@
             },
             success: function (response) {
                 if (response.success) {
-                    tedu.notify('Thêm mới dữ liệu thành công', 'success');
-                    if (self.ProductIdQuantity > 0) {
-                        self.Quantity(self.ProductIdQuantity);
+                    if (self.ProductImages != null && self.ProductImages != "") {
+                        self.UploadFileImageProduct(response.id);
                     }
-                    /* window.location.href = '/admin/quan-ly-san-pham';*/
+                    tedu.notify('Thêm mới dữ liệu thành công', 'success');
+                    //self.GetDataPaging(true);
+                    //window.location.href = '/admin/quan-ly-san-pham';
                 }
                 else {
-                    tedu.notify('Thêm mới dữ liệu không thành công', 'error');
+                    if (response.isNameExist) {
+                        tedu.notify('Tên đã tồn tại', 'error');
+                        //$(".product-name-exist").show().text("Tên đã tồn tại");
+                    }
                 }
             }
         })
+
     }
     self.UpdateServerQuantity = function (_quantities) {
         $.ajax({
@@ -423,6 +371,15 @@
                 }
             }
         })
+    }
+    self.GetValue = function () {
+        self.QuantityEnity.product_id = $("#product_id").val();
+        self.QuantityEnity.color_id = $("#color_id").val();
+        self.QuantityEnity.totalimport = $("#totalimport").val();
+        self.QuantityEnity.priceimprot = $("#priceimprot").val();
+        self.QuantityEnity.pricesell = $("#pricesell").val();
+        self.QuantityEnity.capacity = $("#capacity").val();
+        
     }
     // Quantity end
 
@@ -540,13 +497,14 @@
         }
     }
 
+
     self.GetDataPaging = function (isPageChanged) {
 
         self.ProductSearch.PageIndex = tedu.configs.pageIndex;
         self.ProductSearch.PageSize = tedu.configs.pageSize;
 
         $.ajax({
-            url: '/Admin/Product/GetAllPaging',
+            url: '/Admin/ProductQuantity/GetAllPaging',
             type: 'GET',
             data: self.ProductSearch,
             dataType: 'json',
@@ -587,63 +545,63 @@
     }
     // Get User
 
-    self.AddProduct = function (userView) {
-        $.ajax({
-            url: '/Admin/Product/Add',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                ProductModelView: userView
-            },
-            beforeSend: function () {
-                //Loading('show');
-            },
-            complete: function () {
-                //Loading('hiden');
-            },
-            success: function (response) {
-                if (response.success) {
-                    if (self.ProductImages != null && self.ProductImages != "") {
-                        self.UploadFileImageProduct(response.id);
-                    }
-                    tedu.notify('Thêm mới dữ liệu thành công', 'success');
-                    self.GetDataPaging(true);
-                    window.location.href = '/admin/quan-ly-san-pham';
-                }
-                else {
-                    if (response.isNameExist) {
-                        tedu.notify('Tên đã tồn tại', 'error');
-                        //$(".product-name-exist").show().text("Tên đã tồn tại");
-                    }
-                }
-            }
-        })
-    }
+    //self.AddProduct = function (userView) {
+    //    $.ajax({
+    //        url: '/Admin/Product/Add',
+    //        type: 'POST',
+    //        dataType: 'json',
+    //        data: {
+    //            ProductModelView: userView
+    //        },
+    //        beforeSend: function () {
+    //            //Loading('show');
+    //        },
+    //        complete: function () {
+    //            //Loading('hiden');
+    //        },
+    //        success: function (response) {
+    //            if (response.success) {
+    //                if (self.ProductImages != null && self.ProductImages != "") {
+    //                    self.UploadFileImageProduct(response.id);
+    //                }
+    //                tedu.notify('Thêm mới dữ liệu thành công', 'success');
+    //                self.GetDataPaging(true);
+    //                window.location.href = '/admin/quan-ly-san-pham';
+    //            }
+    //            else {
+    //                if (response.isNameExist) {
+    //                    tedu.notify('Tên đã tồn tại', 'error');
+    //                    //$(".product-name-exist").show().text("Tên đã tồn tại");
+    //                }
+    //            }
+    //        }
+    //    })
+    //}
 
-    self.Update = function (userView) {
-        $.ajax({
-            url: '/Admin/Product/Update',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                ProductModelView: userView
-            },
-            beforeSend: function () {
-                //Loading('show');
-            },
-            complete: function () {
-                //Loading('hiden');
-            },
-            success: function (response) {
-                if (response.success) {
-                    tedu.notify('Cập nhật dữ liệu thành công', 'success');
-                    self.GetDataPaging(true);
-                    window.location.href = '/admin/quan-ly-san-pham';
-                }
+    //self.Update = function (userView) {
+    //    $.ajax({
+    //        url: '/Admin/Product/Update',
+    //        type: 'POST',
+    //        dataType: 'json',
+    //        data: {
+    //            ProductModelView: userView
+    //        },
+    //        beforeSend: function () {
+    //            //Loading('show');
+    //        },
+    //        complete: function () {
+    //            //Loading('hiden');
+    //        },
+    //        success: function (response) {
+    //            if (response.success) {
+    //                tedu.notify('Cập nhật dữ liệu thành công', 'success');
+    //                self.GetDataPaging(true);
+    //                window.location.href = '/admin/quan-ly-san-pham';
+    //            }
 
-            }
-        })
-    }
+    //        }
+    //    })
+    //}
 
     self.GetAllCategories = function () {
         $.ajax({
@@ -672,97 +630,6 @@
         })
     }
 
-    self.GetTextFromHtml = function (html) {
-        var dv = document.createElement("DIV");
-        dv.innerHTML = html;
-        return dv.textContent || dv.innerText || "";
-    }
-
-    self.ValidateUser = function () {
-
-        jQuery.validator.addMethod("ckrequired", function (value, element) {
-            var idname = $(element).attr('id');
-            var editor = CKEDITOR.instances[idname];
-            var ckValue = self.GetTextFromHtml(editor.getData()).replace(/<[^>]*>/gi, '').trim();
-            if (ckValue.length === 0) {
-                //if empty or trimmed value then remove extra spacing to current control  
-                $(element).val(ckValue);
-            } else {
-                //If not empty then leave the value as it is  
-                $(element).val(editor.getData());
-            }
-            return $(element).val().length > 0;
-        }, "This field is required");
-
-
-        $("#form-submit").validate({
-            ignore: [],
-            rules:
-            {
-                productname: {
-                    required: true,
-                },
-                productcategoryid: {
-                    required: true,
-                },
-                producttrademark: {
-                    required: true
-                },
-                productstatus: {
-                    required: true
-                },
-                productdescription: {
-                    ckrequired: true
-                },
-                insurance: {
-                    required: true
-                },
-                commodities: {
-                    required: true
-                }
-            },
-            messages:
-            {
-                productname: {
-                    required: "Bạn chưa nhập tên sản phẩm",
-                },
-                productstatus: {
-                    required: "Bạn chưa chọn trạng thái sản phẩm",
-                },
-                producttrademark: {
-                    required: "Bạn chưa nhập hãng sản xuất",
-                },
-                productcategoryid: {
-                    required: "Bạn chưa chọn danh mục sản phẩm",
-                },
-                insurance: {
-                    required: "Bạn chưa nhập bảo hành"
-                },
-                productdescription: {
-                    ckrequired: "Bạn chưa nhập mô tả sản phẩm"
-                },
-                commodities: {
-                    required: "Bạn chưa chọn loại hàng hóa",
-                }
-            },
-            submitHandler: function (form) {
-
-                self.GetValue();
-                if (self.IsUpdate) {
-                    self.Update(self.Product);
-                    if (self.ProductImages != null && self.ProductImages != "") {
-                        self.UploadFileImageProduct(self.Product.id);
-                    }
-                    if (self.ProductUpdateImage != null && self.ProductUpdateImage.length > 0) {
-                        self.RemoveImageServer(self.ProductUpdateImage);
-                    }
-                }
-                else {
-                    self.AddProduct(self.Product);
-                }
-            }
-        });
-    }
 
     self.RemoveImageServer = function (productUpdateImages) {
         $.ajax({
@@ -785,17 +652,7 @@
     }
 
 
-    self.GetValue = function () {
-        self.Product.name = $("#productname").val();
-        self.Product.category_id = $("#productcategoryid").val();
-        self.Product.percent_price = $("#percent_price").val();
 
-        self.Product.trademark = $("#producttrademark").val();
-        self.Product.status = $("#productstatus").val();
-        self.Product.commodities = $("#commodities").val();
-        self.Product.description = CKEDITOR.instances.productdescription.getData();
-        self.Product.promotion = CKEDITOR.instances.promotion.getData();
-    }
 
     self.RenderHtmlByObject = function (view) {
         $("#productname").val(view.name);
@@ -830,7 +687,6 @@
             }
         }
 
-        CKEDITOR.instances.productdescription.setData(view.description);
         /* CKEDITOR.instances.productspecifications.setData(view.specifications);*/
         /*$("#productspecifications").val(view.specifications);*/
         //$("#productendow").val(view.endow);
@@ -846,7 +702,7 @@
         }
 
         $.ajax({
-            url: '/Admin/Product/UploadImageProduct',
+            url: '/Admin/ProductQuantity/UploadImageProduct',
             type: 'POST',
             contentType: false,
             processData: false,
@@ -891,12 +747,10 @@
 
         self.GetDataPaging();
 
-        self.ValidateUser();
+    
 
         self.GetAllCategories();
 
-        CKEDITOR.replace('productdescription', {});
-        CKEDITOR.replace('promotion', {});
 
         $(".modal").on("hidden.bs.modal", function () {
             $(this).find('form').trigger('reset');
@@ -946,7 +800,6 @@
                     else {
                         files[i].name = files[i].name.replace(/ /g, "").toLowerCase();
                         self.ProductImages.push(files[i]);
-                        console.log(self.ProductImages);
                         var src = URL.createObjectURL(files[i]);
 
                         html = "<div class=\"box-image\" style=\"background-image:url(" + src + ")\"><span onclick=\"removeImage('" + files[i].name + "',this)\" class='remove-image'>X</span></div>";

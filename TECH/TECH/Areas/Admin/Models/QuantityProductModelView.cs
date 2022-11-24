@@ -10,7 +10,7 @@ namespace TECH.Areas.Admin.Models
 {
     public class QuantityProductModelView
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         //public ProductModelView Product { get; set; }
         //public AppSizeModelView AppSize { get; set; }
         public int? TotalImported { get; set; }
@@ -27,14 +27,17 @@ namespace TECH.Areas.Admin.Models
         // update start
         public int id { get; set; }
         public int? product_id { get; set; }
-        public Products? Products { get; set; }
+        public ProductModelView? Product { get; set; }
 
         public int? color_id { get; set; }
-        public Colors? Colors { get; set; }
+        public ColorsModelView? Colors { get; set; }
         public int? totalimport { get; set; }
+        public string? capacity { get; set; }// dung lượng
 
         public decimal? priceimprot { get; set; }
         public decimal? pricesell { get; set; }
+        public string? priceimprotstr { get; set; }
+        public string? pricesellstr { get; set; }
         public int? totalsell { get; set; }
         public int? totalinventory { get; set; }
         public int status { get; set; }

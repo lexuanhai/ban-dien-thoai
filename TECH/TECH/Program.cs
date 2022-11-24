@@ -194,19 +194,19 @@ app.UseEndpoints(endpoints =>
     endpoints.MapAreaControllerRoute(
     name: "quanlysoluong",
     areaName: "Admin",
-    pattern: "admin/quan-ly-so-luong/{*productId}",
+    pattern: "admin/quan-ly-so-luong",
     defaults: new { controller = "ProductQuantity", action = "Index" });
 
-
-
+    endpoints.MapAreaControllerRoute(
+    name: "taomoisoluongsanpham",
+    areaName: "Admin",
+    pattern: "admin/tao-moi-so-luong/{*productId}",
+    defaults: new { controller = "ProductQuantity", action = "QuantityProduct" });
 
     endpoints.MapAreaControllerRoute(
        name: "admin",
        areaName: "Admin",
        pattern: "admin/{controller=Home}/{action=Index}/{id?}");
-
-
-
 
     //// Topic List
     //routes.MapControllerRoute(

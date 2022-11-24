@@ -29,6 +29,8 @@ namespace TECH.Data.DatabaseEntity
         public decimal? pricesell { get; set; }
         public int? totalsell { get; set; }
         public int? totalinventory { get; set; }
+        [Column(TypeName = "nvarchar(250)")]
+        public string? capacity { get; set; }// dung lượng
         public int status { get; set; }
     }
 }

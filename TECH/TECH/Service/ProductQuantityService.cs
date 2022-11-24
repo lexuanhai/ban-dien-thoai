@@ -13,7 +13,7 @@ namespace TECH.Service
 {
     public interface IProductQuantityService
     {           
-        void Add(List<QuantityProductModelView> view);
+        int Add(QuantityProductModelView view);
         bool Update(List<QuantityProductModelView> view);
         bool Deleted(List<int> ids);
         List<QuantityProductModelView> GetProductQuantity(int productId);
@@ -32,29 +32,30 @@ namespace TECH.Service
             _unitOfWork = unitOfWork;
         }
 
-        public void Add(List<QuantityProductModelView> view)
+        public int Add(QuantityProductModelView view)
         {
             try
             {
-                if (view != null && view.Count > 0)
+                if (view != null)
                 {
-                    foreach (var item in view)
+                    var image = new ProductQuantity
                     {
-                        var image = new ProductQuantity
-                        {
-                            product_id = item.ProductId,
-                            size_id = item.AppSizeId,
-                            color_id = item.ColorId,
-                            totalimport = item.TotalImported
-                        };
-                        _productQuantityRepository.Add(image);
-                    }
-                                
+                        product_id = view.ProductId,
+                        color_id = view.ColorId,
+                        totalimport = view.TotalImported,
+                        priceimprot = view.priceimprot,
+                        pricesell = view.pricesell,                       
+                        capacity = view.capacity
+                    };
+                    _productQuantityRepository.Add(image);
+                    Save();
+                    return image.id;
                 }
             }
             catch (Exception ex)
             {
             }
+            return 0;
 
         }
         public List<QuantityProductModelView> GetProductQuantity(int productId)
@@ -63,7 +64,7 @@ namespace TECH.Service
             {
                 var productQuantity = _productQuantityRepository.FindAll(p => p.product_id == productId).Select(p => new QuantityProductModelView
                 {
-                    Id = p.id,
+                    //Id = p.id,
                     ProductId = p.product_id,
                     ColorId = p.color_id,
                     AppSizeId = p.size_id,
@@ -85,7 +86,7 @@ namespace TECH.Service
                 {
                     foreach (var item in view)
                     {
-                        var dataServer = _productQuantityRepository.FindById(item.Id);
+                        var dataServer = _productQuantityRepository.FindById(item.id);
                         if (dataServer != null)
                         {
                             dataServer.product_id = item.ProductId;

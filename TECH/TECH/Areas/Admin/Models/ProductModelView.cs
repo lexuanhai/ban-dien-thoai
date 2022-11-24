@@ -10,6 +10,7 @@ namespace TECH.Areas.Admin.Models
     {
         public int id { get; set; }
         public int? category_id { get; set; }
+        public CategoryModelView? Category { get; set; }
         public string? categorystr { get; set; }
         public string? name { get; set; }
 
