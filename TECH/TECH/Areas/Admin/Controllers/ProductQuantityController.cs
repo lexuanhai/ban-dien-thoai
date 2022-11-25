@@ -33,7 +33,7 @@ namespace TECH.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult QuantityProduct(int productId)
+        public IActionResult AddQuantity(int productId)
         {
             if (productId > 0)
             {

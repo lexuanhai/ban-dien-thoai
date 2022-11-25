@@ -61,6 +61,7 @@
         if (data != "" && data.length > 0) {
             var index = 0;
             for (var i = 0; i < data.length; i++) {
+                debugger
                 var item = data[i];
                 html += "<tr>";
                 html += "<td>" + (++index) + "</td>";
@@ -79,7 +80,8 @@
                 html += "<td>" + (item.totalinventory != null ? item.totalinventory:"" ) + "</td>";
                 html += "<td style=\"text-align: center;\">" +
 
-                    (item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye custom-icon\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash custom-icon\"></i></button>") +
+                    //(item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye custom-icon\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash custom-icon\"></i></button>") +
+                    "<button  class=\"btn btn-success custom-button\" onClick=\"AddQuantityView(" + item.Product.id + ")\"><i  class=\"bi bi-calculator custom-icon\"></i></button>" +
                     "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateView(" + item.id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +                   
                     "<button  class=\"btn btn-danger custom-button\" onClick=\"Deleted(" + item.id + ")\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
 
@@ -110,64 +112,10 @@
     self.DeletedHtml = function (tag) {
         $(tag).closest(".new").remove();
     }
-    //self.GetProductQuantityForProductId = function (productId) {
-    //    $.ajax({
-    //        url: '/Admin/ProductQuantity/GetProductQuantityForProductId',
-    //        type: 'GET',
-    //        data: {
-    //            productId: productId
-    //        },
-    //        dataType: 'json',
-    //        beforeSend: function () {
-    //        },
-    //        complete: function () {
-    //        },
-    //        success: function (response) {
-    //            self.ProductQuantityRenderTableHtml(response.Data);
-    //        }
-    //    });
-    //};
-
-    //self.ProductQuantityRenderTableHtml = function (data) {
-    //    var html = "";
-    //    if (data != "" && data.length > 0) {
-    //        var index = 0;
-    //        for (var i = 0; i < data.length; i++) {
-    //            var item = data[i];
-    //            html += "<tr data-quantity=" + item.Id + " class=" + item.Id + ">";
-    //            html += "<td>" + (++index) + "</td>";
-    //            html += "<td>" + self.GetColorByIdOrAll(item.ColorId, true) + "</td>";
-    //            html += "<td>" + self.GetSizeByIdOrAll(item.AppSizeId, true) + "</td>";
-    //            html += "<td><input type=\"number\" class=\"form-control totalimport\" min=\"0\" required value=" + item.TotalImported + " disabled></td>";
-    //            html += "<td style=\"text-align: center;\">" +
-    //                "<button type=\"button\" class=\"btn btn-primary custom-button\" onClick=\"UpdateQuantity(" + item.Id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +
-    //                "<button type=\"button\" class=\"btn btn-danger custom-button\" onClick=\"DeletedQuantity(" + item.Id + ")\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
-    //                "</td>";
-    //            html += "</tr>";
-    //        }
-    //    }
-    //    else {
-    //        html += "<tr class=\"no-data\"><td colspan=\"10\" style=\"text-align:center\">Không có dữ liệu</td></tr>";
-    //    }
-    //    $("#quantity #tblData").html(html);
-    //    $('#quantity').modal('show');
-    //};
-    //self.UpdateQuantity = function (id) {
-    //    if (id > 0) {
-    //        self.ListUpdateQuantity.push(id);
-    //        var classNameSelect = "." + id.toString() + " select";
-    //        var classNameInput = "." + id.toString() + " .totalimport";
-    //        var className = classNameSelect + "," + classNameInput;
-    //        $(className).removeAttr('disabled');
-    //    }
-    //}
-    //self.DeletedQuantity = function (id) {
-    //    if (id > 0) {
-    //        self.ListDeletedQuantity.push(id);
-    //        var className = "." + id.toString();
-    //        $(className).remove();
-    //    }
-    //}
+    self.AddQuantityView = function (productId) {
+        window.location.href = "/admin/tao-moi-so-luong/?productId=" + productId;
+    }
+   
     self.GetColorByIdOrAll = function (colorId, isRenderAPI) {
         var html = "";
         //if (isRenderAPI) {
@@ -228,7 +176,7 @@
                 if (response.Data != null && response.Data.length > 0) {
                     self.Colors = response.Data;
                     var html = self.GetColorByIdOrAll(0);
-                    $("#selectcolor").append(html);
+                    $("#color_id").append(html);
                 }
             }
         });
