@@ -45,6 +45,52 @@ namespace TECH.Areas.Admin.Controllers
             }
             return View();
         }
+        public JsonResult GetQuantityById(int quantityId)
+        {
+            if (quantityId > 0)
+            {
+                var data = _productQuantityService.GetById(quantityId);
+                if (data != null && data.product_id.HasValue && data.product_id.Value > 0)
+                {                   
+                    // get product 
+                    var productData = _productsService.GetByid(data.product_id.Value);
+                    if (productData != null)
+                    {
+                        data.Product = productData;
+                    }
+                    // set color sản phẩm 
+                    if (data.color_id.HasValue && data.color_id.Value > 0)
+                    {
+                        var colorData = _colorsService.GetByid(data.color_id.Value);
+                        if (colorData != null)
+                        {
+                            data.Colors = colorData;
+                        }
+                    }
+                    return Json(new
+                    {
+                        Data = data,
+                        Success = true
+                    });
+                }
+            }
+            return Json(new
+            {
+                Success = false
+            });
+        }
+        //public IActionResult UpdateQuantityView(int quantityId)
+        //{
+        //    if (quantityId > 0)
+        //    {
+        //        var data = GetQuantityById(quantityId);
+        //        if (data != null)
+        //        {
+        //            return View(data);
+        //        }
+        //    }
+        //    return View();
+        //}
 
         [HttpGet]
         public JsonResult GetProductQuantityForProductId(int productId)

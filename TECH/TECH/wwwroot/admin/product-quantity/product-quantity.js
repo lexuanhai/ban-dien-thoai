@@ -61,7 +61,6 @@
         if (data != "" && data.length > 0) {
             var index = 0;
             for (var i = 0; i < data.length; i++) {
-                debugger
                 var item = data[i];
                 html += "<tr>";
                 html += "<td>" + (++index) + "</td>";
@@ -333,15 +332,14 @@
 
     self.UpdateView = function (id) {
         if (id != null && id != "") {
-            //$(".btn-submit-format").text("Cập nhật");
-            //$(".product-title").text("Cập nhật sản phẩm");
-            $(".custom-format").attr("disabled", "disabled");
+           /* window.location.href = "/admin/cap-nhat-so-luong?quantityId=" + id;*/
+            //$(".custom-format").attr("disabled", "disabled");
             self.GetById(id, self.RenderHtmlByObject);
-            self.Product.id = id;
+            //self.Product.id = id;
 
-            $(".product-update").show();
-            $(".product-list").hide();
-            self.IsUpdate = true;
+            //$(".product-update").show();
+            //$(".product-list").hide();
+            //self.IsUpdate = true;
         }
     }
     self.Quantity = function (id) {
@@ -352,11 +350,11 @@
     self.GetById = function (id, renderCallBack) {
         if (id != null && id != "") {
             $.ajax({
-                url: '/Admin/Product/GetById',
+                url: '/Admin/ProductQuantity/GetQuantityById',
                 type: 'GET',
                 dataType: 'json',
                 data: {
-                    id: id
+                    quantityId: id
                 },
                 beforeSend: function () {
                 },
@@ -603,42 +601,26 @@
 
 
     self.RenderHtmlByObject = function (view) {
-        $("#productname").val(view.name);
-        $("#productcategoryid").val(view.category_id);
-        //$("#productprice").val(view.price);
-        //$("#productcolor").val(view.color);
-        //if (view.color != null && view.color != "") {
-        //    $("#producttypecolor").val(0);
+        $("#productname").val(view.Product.name);
+        $("#color_id").val(view.quantity);
+        $("#capacity").val(view.short_desc);
+
+        $("#totalimport").val(view.price_sell);
+        $("#priceimprot").val(view.price_reduced);
+        $("#pricesell").val(view.price_import);
+
+        //if (view.ImageModelView != null && view.ImageModelView.length > 0) {
+        //    self.ProductServerImages = view.ImageModelView;
+        //    for (var i = 0; i < view.ImageModelView.length; i++) {
+        //        var item = view.ImageModelView[i];
+        //        var html = "";
+        //        html = "<div class=\"box-image\" style=\"background-image:url(/product-image/" + item.name + ")\"><span onclick=\"removeImageViewServer(" + item.id + ",this)\" class='remove-image'>X</span></div>";
+
+        //        $(".productimages").append(html);
+        //    }
         //}
-        //else {
-        //    $("#producttypecolor").val(1);
-        //}
-        self.Product.avatar = view.avatar;
-        $("#productquantity").val(view.quantity);
-        $("#productshort_desc").val(view.short_desc);
+        $("#QuantityModal").modal("show");
 
-        $("#productpricesell").val(view.price_sell);
-        $("#productreduced").val(view.price_reduced);
-        $("#productpriceimport").val(view.price_import);
-        $("#producttrademark").val(view.trademark);
-        $("#productstatus").val(view.status);
-
-        if (view.ImageModelView != null && view.ImageModelView.length > 0) {
-            self.ProductServerImages = view.ImageModelView;
-            /*  self.ProductUpdateImage = view.ImageModelView;*/
-            for (var i = 0; i < view.ImageModelView.length; i++) {
-                var item = view.ImageModelView[i];
-                var html = "";
-                html = "<div class=\"box-image\" style=\"background-image:url(/product-image/" + item.name + ")\"><span onclick=\"removeImageViewServer(" + item.id + ",this)\" class='remove-image'>X</span></div>";
-
-                $(".productimages").append(html);
-            }
-        }
-
-        /* CKEDITOR.instances.productspecifications.setData(view.specifications);*/
-        /*$("#productspecifications").val(view.specifications);*/
-        //$("#productendow").val(view.endow);
-        //$(".box-image").css({ "background-image": "url('/product-image/" + view.avatar + "')", "display": "block" });  
     }
 
     self.UploadFileImageProduct = function (productid) {

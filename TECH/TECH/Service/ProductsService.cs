@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using TECH.Areas.Admin.Models;
 using TECH.Areas.Admin.Models.Search;
 using TECH.Data.DatabaseEntity;
@@ -27,6 +28,7 @@ namespace TECH.Service
         List<ProductModelView> GetProductReLated(int categoryId, int productId);
         List<ProductModelView> GetProductLike(int categoryId);
         List<ProductModelView> ProductSearch(string textSearch);
+        List<ProductModelView> GetAllProduct();
     }
 
     public class ProductsService : IProductsService
@@ -42,9 +44,16 @@ namespace TECH.Service
             _categoryRepository = categoryRepository;
             _unitOfWork = unitOfWork;
         }
-
         
-
+        public List<ProductModelView> GetAllProduct()
+        {
+            var data = _productsRepository.FindAll().Select(p => new ProductModelView()
+            {
+                id = p.id,
+                name = p.name
+            }).ToList();
+            return data;
+        }
         public bool IsProductNameExist(string name)
         {
             var data = _productsRepository.FindAll().Any(p=>p.name == name);

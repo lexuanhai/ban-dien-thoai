@@ -203,7 +203,12 @@ app.UseEndpoints(endpoints =>
     pattern: "admin/tao-moi-so-luong/{productId?}",
     defaults: new { controller = "ProductQuantity", action = "AddQuantity" });
 
-    
+    endpoints.MapAreaControllerRoute(
+    name: "updatesoluongsanpham",
+    areaName: "Admin",
+    pattern: "admin/cap-nhat-so-luong/{quantityId?}",
+    defaults: new { controller = "ProductQuantity", action = "UpdateQuantityView" });
+
 
     endpoints.MapAreaControllerRoute(
        name: "admin",

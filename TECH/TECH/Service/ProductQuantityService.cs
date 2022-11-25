@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace TECH.Service
     {           
         int Add(QuantityProductModelView view);
         bool Update(List<QuantityProductModelView> view);
+        QuantityProductModelView GetById(int quantityId);
         bool Deleted(List<int> ids);
         List<QuantityProductModelView> GetProductQuantity(int productId);
         void Save();
@@ -31,7 +33,29 @@ namespace TECH.Service
             _productQuantityRepository = productQuantityRepository;
             _unitOfWork = unitOfWork;
         }
+        public QuantityProductModelView GetById(int quantityId)
+        {
+            var quantity = new QuantityProductModelView();
+            if (quantityId > 0)
+            {
+                var quantityServer = _productQuantityRepository.FindAll(q => q.id == quantityId).Select(q=>new QuantityProductModelView()
+                {
+                    id = q.id,
+                    product_id = q.product_id,
+                    color_id = q.color_id,
+                    totalimport = q.totalimport,
+                    priceimprot = q.priceimprot,
+                    pricesell = q.pricesell,
+                    totalsell = q.totalsell,
+                    totalinventory = q.totalinventory,
+                    capacity = q.capacity
+                }).FirstOrDefault();
+                if (quantityServer != null)
+                    quantity = quantityServer;
+            }
+            return quantity;
 
+        }
         public int Add(QuantityProductModelView view)
         {
             try
