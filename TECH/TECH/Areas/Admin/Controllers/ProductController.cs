@@ -32,6 +32,52 @@ namespace TECH.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        public JsonResult GetAll()
+        {
+            var data = _productsService.GetAllProduct();
+            //var model = new ProductModelView();
+            //if (id > 0)
+            //{
+            //    model = _productsService.GetByid(id);
+
+
+            //    if (model != null && !string.IsNullOrEmpty(model.name))
+            //    {
+
+            //        var productimages = _productsImagesService.GetImageProduct(model.id);
+            //        if (productimages != null && productimages.Count > 0)
+            //        {
+            //            var lstImages = _imagesService.GetImageName(productimages);
+            //            if (lstImages != null && lstImages.Count > 0)
+            //            {
+            //                model.ImageModelView = lstImages;
+            //            }
+            //        }
+
+            //        if (model.category_id.HasValue && model.category_id.Value > 0)
+            //        {
+            //            var category = _categoryService.GetByid(model.category_id.Value);
+            //            model.categorystr = category.name;
+            //        }
+            //        else
+            //        {
+            //            model.categorystr = "";
+            //        }
+
+            //    }
+            //    else
+            //    {
+            //        model.categorystr = "Chờ xử lý";
+            //    }
+
+            //}
+            return Json(new
+            {
+                Data = data
+            });
+        }
+
+        [HttpGet]
         public IActionResult AddView()
         {
             return View();

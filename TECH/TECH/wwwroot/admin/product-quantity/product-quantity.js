@@ -21,6 +21,7 @@
         totalsell: 0,
         capacity:""
     };
+    self.Products = [];
     // quantity end
     self.Product = {
         id: null,
@@ -77,7 +78,7 @@
                 html += "<td>" + (item.totalimport != null ? item.totalimport:"") + "</td>";
                 html += "<td>" + (item.totalsell != null ? item.totalsell:"") + "</td>";
                 html += "<td>" + (item.totalinventory != null ? item.totalinventory:"" ) + "</td>";
-                html += "<td style=\"text-align: center;\">" +
+                html += "<td style=\"text-align: center;width: 100%; justify-content: center;\">" +
 
                     //(item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye custom-icon\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash custom-icon\"></i></button>") +
                     "<button  class=\"btn btn-success custom-button\" onClick=\"AddQuantityView(" + item.Product.id + ")\"><i  class=\"bi bi-calculator custom-icon\"></i></button>" +
@@ -106,6 +107,9 @@
         });
 
         self.ValidateQuanity();
+        $('.customselect2').select2();
+        self.GetAllProduct();
+
     }
   
     self.DeletedHtml = function (tag) {
@@ -266,6 +270,7 @@
         })
 
     }
+
     self.UpdateServerQuantity = function (_quantities) {
         $.ajax({
             url: '/Admin/ProductQuantity/Update',
@@ -294,6 +299,7 @@
             }
         })
     }
+
     self.DeletedServerQuantity = function (quantities) {
         $.ajax({
             url: '/Admin/ProductQuantity/Deleted',
@@ -319,6 +325,7 @@
             }
         })
     }
+
     self.GetValue = function () {
         self.QuantityEnity.product_id = $("#product_id").val();
         self.QuantityEnity.color_id = $("#color_id").val();
@@ -335,6 +342,7 @@
            /* window.location.href = "/admin/cap-nhat-so-luong?quantityId=" + id;*/
             //$(".custom-format").attr("disabled", "disabled");
             self.GetById(id, self.RenderHtmlByObject);
+           
             //self.Product.id = id;
 
             //$(".product-update").show();
@@ -418,31 +426,30 @@
             }
         });
     }
-    self.Deleted = function (id) {
-        if (id != null && id != "") {
-            tedu.confirm('Bạn có chắc muốn xóa sản phẩm này?', function () {
-                $.ajax({
-                    type: "POST",
-                    url: "/Admin/Product/Delete",
-                    data: { id: id },
-                    beforeSend: function () {
-                        // tedu.start//Loading();
-                    },
-                    success: function () {
-                        tedu.notify('Đã xóa thành công', 'success');
-                        //tedu.stop//Loading();
-                        //loadData();
-                        self.GetDataPaging(true);
-                    },
-                    error: function () {
-                        tedu.notify('Has an error', 'error');
-                        tedu.stop//Loading();
-                    }
-                });
-            });
-        }
-    }
-
+    //self.Deleted = function (id) {
+    //    if (id != null && id != "") {
+    //        tedu.confirm('Bạn có chắc muốn xóa sản phẩm này?', function () {
+    //            $.ajax({
+    //                type: "POST",
+    //                url: "/Admin/Product/Delete",
+    //                data: { id: id },
+    //                beforeSend: function () {
+    //                    // tedu.start//Loading();
+    //                },
+    //                success: function () {
+    //                    tedu.notify('Đã xóa thành công', 'success');
+    //                    //tedu.stop//Loading();
+    //                    //loadData();
+    //                    self.GetDataPaging(true);
+    //                },
+    //                error: function () {
+    //                    tedu.notify('Has an error', 'error');
+    //                    tedu.stop//Loading();
+    //                }
+    //            });
+    //        });
+    //    }
+    //}
 
     self.GetDataPaging = function (isPageChanged) {
 
@@ -473,22 +480,79 @@
         })
 
     };
+    self.GetAllProduct = function () {
+        $.ajax({
+            url: '/Admin/Product/GetAll',
+            type: 'GET',           
+            dataType: 'json',
+            beforeSend: function () {
+                //Loading('show');
+            },
+            complete: function () {
+                //Loading('hiden');
+            },
+            success: function (response) {                
+                if (response.Data != null && response.Data.length > 0) {
+                    self.Products = response.Data;
+                    self.RenderProductToHtml(self.Products,0);
+                }
 
-
-
-    // Set value default
-    self.SetValueDefault = function () {
-        self.Product.Id = null;
-        $("#fullname").val("").attr("placeholder", "Nhập tên người dùng");
-        $("#mobile").val("").attr("placeholder", "Nhập số điện thoại");
-        $("#birthday").val("").attr("placeholder", "Ngày sinh");
-        $("#email").val("").attr("placeholder", "Email");
-        $("#username").val("").attr("placeholder", "Tên đăng nhập");
-        $("#password").val("").attr("placeholder", "Mật khẩu");
-        $("#address").val("").attr("placeholder", "Địa chỉ");
-        $("#confirm_password").val("").attr("placeholder", "Nhập lại mật khẩu");
-        $(".box-avatar").css("display", "none");
+            }
+        })
     }
+
+    self.GetColorByIdOrAll = function (colorId, isRenderAPI) {
+        var html = "";
+        //if (isRenderAPI) {
+        //    html = "<select class=\"form-select colors\" required disabled><option value=\"\"> Chọn màu </option>";
+        //}
+        //else {
+        //    html = "<select class=\"form-select colors\" required><option value=\"\"> Chọn màu </option>";
+        //}
+        if (self.Colors != null && self.Colors.length > 0) {
+            for (var i = 0; i < self.Colors.length; i++) {
+                var item = self.Colors[i];
+                if (item.id == colorId) {
+                    html += "<option value=\"" + item.id + "\" selected>" + (item.name != "" ? item.name : (item.code != "" ? item.code : "")) + "</option>";
+                }
+                else {
+                    html += "<option value=\"" + item.id + "\">" + (item.name != "" ? item.name : (item.code != "" ? item.code : "")) + "</option>";
+                }
+            }
+        }
+        html += "</select>";
+        return html;
+    }
+    self.RenderProductToHtml = function (data,id) {
+        var html = "<option value=\"\">Chọn sản phẩm</option>";
+        if (data != null && data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                if (item.id == id) {
+                    html += "<option value=\"" + item.id + "\" selected>" + (item.name != "" ? item.name : "") + "</option>";
+                }
+                else {
+                    html += "<option value=\"" + item.id + "\">" + (item.name != "" ? item.name  : "") + "</option>";
+                }
+            }
+        }
+        html += "</select>";
+        $("#product_name").html(html);
+        /*return html;*/
+    }
+    // Set value default
+    //self.SetValueDefault = function () {
+    //    self.Product.Id = null;
+    //    $("#fullname").val("").attr("placeholder", "Nhập tên người dùng");
+    //    $("#mobile").val("").attr("placeholder", "Nhập số điện thoại");
+    //    $("#birthday").val("").attr("placeholder", "Ngày sinh");
+    //    $("#email").val("").attr("placeholder", "Email");
+    //    $("#username").val("").attr("placeholder", "Tên đăng nhập");
+    //    $("#password").val("").attr("placeholder", "Mật khẩu");
+    //    $("#address").val("").attr("placeholder", "Địa chỉ");
+    //    $("#confirm_password").val("").attr("placeholder", "Nhập lại mật khẩu");
+    //    $(".box-avatar").css("display", "none");
+    //}
     // Get User
 
     //self.AddProduct = function (userView) {
@@ -576,7 +640,6 @@
         })
     }
 
-
     self.RemoveImageServer = function (productUpdateImages) {
         $.ajax({
             url: '/Admin/Product/RemoveImage',
@@ -597,17 +660,22 @@
         })
     }
 
-
-
-
     self.RenderHtmlByObject = function (view) {
         $("#productname").val(view.Product.name);
-        $("#color_id").val(view.quantity);
-        $("#capacity").val(view.short_desc);
-
-        $("#totalimport").val(view.price_sell);
-        $("#priceimprot").val(view.price_reduced);
-        $("#pricesell").val(view.price_import);
+        $("#color_id").val(view.Colors.id);
+        if (view.capacity != null) {
+            $("#capacity").val(view.capacity);
+        }
+        if (view.totalimport != null) {
+            $("#totalimport").val(view.totalimport);
+        }
+        if (view.priceimprot != null) {
+            $("#priceimprot").val(view.priceimprot);
+        }
+        if (view.pricesell != null) {
+            $("#pricesell").val(view.price_import);
+        }
+        
 
         //if (view.ImageModelView != null && view.ImageModelView.length > 0) {
         //    self.ProductServerImages = view.ImageModelView;
@@ -620,6 +688,7 @@
         //    }
         //}
         $("#QuantityModal").modal("show");
+        self.RenderProductToHtml(self.Products, view.Product.id);
 
     }
 
@@ -672,15 +741,11 @@
         }
     }
 
-
     $(document).ready(function () {
 
         self.GetDataPaging();
 
-    
-
         self.GetAllCategories();
-
 
         $(".modal").on("hidden.bs.modal", function () {
             $(this).find('form').trigger('reset');

@@ -2,7 +2,9 @@
     ViewData["Title"] = "Quản lý số lượng";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
- <style type="text/css">
+
+@section Styles{
+    <style type="text/css">
     input.error {
         border-color: #f00 !important;
     }
@@ -93,8 +95,20 @@
         font-size: 14px;
         margin: 5px 5px 0px 0px;
     }
+    /*set css for select2 start*/
+                            .custom-select2 .select2-container .select2-selection--single,
+                            .custom-select2 .select2-container--default .select2-selection--single .select2-selection__arrow{
+                                                height: 37px !important;
+                            }
+                            
+                            .custom-select2 .select2-container--default .select2-selection--single .select2-selection__rendered{
+                                        line-height: 37px !important;
+                            }
+    /*end*/
 </style>
-
+<link href="~/admin/plugins/select2/css/select2.min.css" rel="stylesheet" />
+<link href="~/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" rel="stylesheet" />
+}
 
 
 <div class="page-heading product-list">
@@ -200,6 +214,7 @@
    <partial name="_Quantity" />*@
 
 @section Scripts{
+        <script src="~/admin/plugins/select2/js/select2.full.min.js"></script>
         <script src="~/admin/plugins/jquery-validation/jquery.validate.min.js"></script>       
         <script src="~/admin/product-quantity/product-quantity.js?v=@DateTime.Now.Ticks"></script>
     }
