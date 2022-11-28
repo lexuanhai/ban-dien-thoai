@@ -673,7 +673,7 @@
             $("#priceimprot").val(view.priceimprot);
         }
         if (view.pricesell != null) {
-            $("#pricesell").val(view.price_import);
+            $("#pricesell").val(view.pricesell);
         }
         
 

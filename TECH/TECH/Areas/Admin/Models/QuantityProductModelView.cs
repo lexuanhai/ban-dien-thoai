@@ -41,6 +41,7 @@ namespace TECH.Areas.Admin.Models
         public int? totalsell { get; set; }
         public int? totalinventory { get; set; }
         public int status { get; set; }
+        public List<ImageModelView> ImageModelView { get; set; }
         // update end
 
 

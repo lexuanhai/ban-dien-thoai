@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using TECH.Areas.Admin.Models;
 using TECH.Areas.Admin.Models.Search;
+using TECH.Data.DatabaseEntity;
 using TECH.Service;
 
 namespace TECH.Areas.Admin.Controllers
@@ -67,6 +68,18 @@ namespace TECH.Areas.Admin.Controllers
                             data.Colors = colorData;
                         }
                     }
+                    // hình ảnh sản phẩm
+                    var colorImages = _colorImagesService.GetColorImageQuantity(quantityId);
+                    if (colorImages != null && colorImages.Count > 0)
+                    {
+                        var lstImages = _imagesService.GetImageName(colorImages.Select(p=>p.image_id.Value).ToList());
+
+                        if (lstImages != null && lstImages.Count > 0)
+                        {
+                            data.ImageModelView = lstImages;
+                        }
+                    }
+
                     return Json(new
                     {
                         Data = data,

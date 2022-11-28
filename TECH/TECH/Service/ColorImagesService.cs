@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace TECH.Service
         void Add(List<ColorImagesModelView> view);
         bool Update(List<ColorImagesModelView> view);
         List<int> GetColorImages(int productid);
+        List<ColorImagesModelView> GetColorImageQuantity(int product_quantities_id);
         bool Deleted(int id);
         void Remove(List<int> ids);
         void Save();
@@ -42,7 +44,21 @@ namespace TECH.Service
             }
             return null;
         }
-
+        public List<ColorImagesModelView> GetColorImageQuantity(int product_quantities_id)
+        {
+            if (product_quantities_id > 0)
+            {
+                var data = _colorImagesRepository.FindAll(p => p.product_quantities_id == product_quantities_id).Select(p => new ColorImagesModelView()
+                {
+                    id = p.id,
+                    image_id = p.image_id,
+                    product_quantities_id = p.product_quantities_id
+                }).ToList();
+                if (data != null && data.Count > 0)
+                    return data;
+            }
+            return null;
+        }
         public void Add(List<ColorImagesModelView> view)
         {
             try
