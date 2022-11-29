@@ -155,7 +155,7 @@ img {
 }
 .form-inline {
     display: flex;
-    flex-flow: row wrap;
+    /*flex-flow: row wrap;*/
     align-items: center;
 }
 .my-form:hover, .my-form:focus, btn-search:hover, btn-search:focus {

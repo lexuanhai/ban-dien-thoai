@@ -153,11 +153,11 @@ namespace TECH.Areas.Admin.Controllers
            
         }
         [HttpPost]
-        public JsonResult Update(List<QuantityProductModelView> quantities)
+        public JsonResult Update(QuantityProductModelView quantities)
         {
             try
             {
-                if (quantities == null || quantities.Count == 0)
+                if (quantities == null)
                 {
                     return Json(new
                     {

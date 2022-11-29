@@ -13,6 +13,7 @@
     self.ListDeletedQuantity = [];
     self.Colors = [];
     self.QuantityEnity = {
+        id:0,
         product_id:0,
         color_id: 0,
         totalimport: 0,
@@ -81,7 +82,7 @@
                 html += "<td style=\"text-align: center;width: 100%; justify-content: center;\">" +
 
                     //(item.status == 0 ? "<button  class=\"btn btn-dark custom-button\" onClick=UpdateStatus(" + item.id + ",1)><i class=\"bi bi-eye custom-icon\"></i></button>" : "<button  class=\"btn btn-secondary custom-button\" onClick=UpdateStatus(" + item.id + ",0)><i class=\"bi bi-eye-slash custom-icon\"></i></button>") +
-                    "<button  class=\"btn btn-success custom-button\" onClick=\"AddQuantityView(" + item.Product.id + ")\"><i  class=\"bi bi-calculator custom-icon\"></i></button>" +
+                    //"<button  class=\"btn btn-success custom-button\" onClick=\"AddQuantityView(" + item.Product.id + ")\"><i  class=\"bi bi-calculator custom-icon\"></i></button>" +
                     "<button  class=\"btn btn-primary custom-button\" onClick=\"UpdateView(" + item.id + ")\"><i  class=\"bi bi-pencil-square custom-icon\"></i></button>" +                   
                     "<button  class=\"btn btn-danger custom-button\" onClick=\"Deleted(" + item.id + ")\"><i  class=\"bi bi-trash custom-icon\"></i></button>" +
 
@@ -110,9 +111,11 @@
         $('.customselect2').select2();
         self.GetAllProduct();
         $(".btn-add").click(function () {
-            $("#QuantityModalAdd").modal("show");
+            $("#QuantityModalUpdateAdd").modal("show");
+            $("#titleModal").text("Thêm mới số lượng sản phẩm");
+            $(".btn-submit-format").text("Thêm mới");
         })
-    }
+    }    
   
     self.DeletedHtml = function (tag) {
         $(tag).closest(".new").remove();
@@ -223,7 +226,7 @@
             submitHandler: function (form) {
                 self.GetValue();
                 if (self.IsUpdate) {
-                    self.Update(self.Product);
+                    self.UpdateServerQuantity(self.QuantityEnity);
                     if (self.ProductImages != null && self.ProductImages != "") {
                         self.UploadFileImageProduct(self.Product.id);
                     }
@@ -259,6 +262,8 @@
                         self.UploadFileImageProduct(response.id);
                     }
                     tedu.notify('Thêm mới dữ liệu thành công', 'success');
+                    self.GetDataPaging();
+                    $("#QuantityModalUpdateAdd").modal("hide");
                     //self.GetDataPaging(true);
                     //window.location.href = '/admin/quan-ly-san-pham';
                 }
@@ -290,10 +295,8 @@
             success: function (response) {
                 if (response.success) {
                     tedu.notify('Cập nhật dữ liệu thành công', 'success');
-                    if (self.ProductIdQuantity > 0) {
-                        self.Quantity(self.ProductIdQuantity);
-                    }
-                    //window.location.href = '/admin/quan-ly-san-pham';
+                    self.GetDataPaging();
+                    $("#QuantityModalUpdateAdd").modal("hide");
                 }
                 else {
                     tedu.notify('Cập nhật dữ liệu không thành công', 'error');
@@ -329,11 +332,11 @@
     }
 
     self.GetValue = function () {
-        self.QuantityEnity.product_id = $("#product_id").val();
-        self.QuantityEnity.color_id = $("#color_id").val();
-        self.QuantityEnity.totalimport = $("#totalimport").val();
-        self.QuantityEnity.priceimprot = $("#priceimprot").val();
-        self.QuantityEnity.pricesell = $("#pricesell").val();
+        self.QuantityEnity.product_id = parseInt($("#product_name").val());
+        self.QuantityEnity.color_id = parseInt($("#color_id").val());
+        self.QuantityEnity.totalimport = parseInt($("#totalimport").val());
+        self.QuantityEnity.priceimprot = parseInt($("#priceimprot").val());
+        self.QuantityEnity.pricesell = parseInt($("#pricesell").val());
         self.QuantityEnity.capacity = $("#capacity").val();
         
     }
@@ -341,10 +344,15 @@
 
     self.UpdateView = function (id) {
         if (id != null && id != "") {
+            self.IsUpdate = true;
            /* window.location.href = "/admin/cap-nhat-so-luong?quantityId=" + id;*/
             //$(".custom-format").attr("disabled", "disabled");
             self.GetById(id, self.RenderHtmlByObject);
-           
+            self.QuantityEnity.id = id;
+            $("#titleModal").text("Cập nhật số lượng sản phẩm");
+            $(".btn-submit-format").text("Cập nhật");
+            /*$('#product_name').select2("enable", false);*/
+            $("#product_name").prop("disabled", true);
             //self.Product.id = id;
 
             //$(".product-update").show();
@@ -373,7 +381,7 @@
                 success: function (response) {
                     if (response.Data != null) {
                         renderCallBack(response.Data);
-                        self.Id = id;
+                       
 
                     }
                 }
@@ -428,31 +436,7 @@
             }
         });
     }
-    //self.Deleted = function (id) {
-    //    if (id != null && id != "") {
-    //        tedu.confirm('Bạn có chắc muốn xóa sản phẩm này?', function () {
-    //            $.ajax({
-    //                type: "POST",
-    //                url: "/Admin/Product/Delete",
-    //                data: { id: id },
-    //                beforeSend: function () {
-    //                    // tedu.start//Loading();
-    //                },
-    //                success: function () {
-    //                    tedu.notify('Đã xóa thành công', 'success');
-    //                    //tedu.stop//Loading();
-    //                    //loadData();
-    //                    self.GetDataPaging(true);
-    //                },
-    //                error: function () {
-    //                    tedu.notify('Has an error', 'error');
-    //                    tedu.stop//Loading();
-    //                }
-    //            });
-    //        });
-    //    }
-    //}
-
+  
     self.GetDataPaging = function (isPageChanged) {
 
         self.ProductSearch.PageIndex = tedu.configs.pageIndex;
@@ -593,7 +577,9 @@
 
     self.RenderHtmlByObject = function (view) {
         $("#productname").val(view.Product.name);
-        $("#color_id").val(view.Colors.id);
+        if (view.Colors != null) {
+            $("#color_id").val(view.Colors.id);
+        }        
         if (view.capacity != null) {
             $("#capacity").val(view.capacity);
         }
@@ -607,7 +593,6 @@
             $("#pricesell").val(view.pricesell);
         }
         
-
         if (view.ImageModelView != null && view.ImageModelView.length > 0) {
             self.ProductServerImages = view.ImageModelView;
             for (var i = 0; i < view.ImageModelView.length; i++) {
@@ -621,7 +606,7 @@
         else {
             $(".productimages").html("");
         }
-        $("#QuantityModalUpdate").modal("show");
+        $("#QuantityModalUpdateAdd").modal("show");
         self.RenderProductToHtml(self.Products, view.Product.id);
 
     }
@@ -686,6 +671,9 @@
             $("form").validate().resetForm();
             $("label.error").hide();
             $(".error").removeClass("error");
+            $(".productimages").html(""); // set ảnh về mặc định về ban đầu
+            $("#product_name").select2().val("").trigger("change"); // set giá trị cho select2 
+            $("#product_name").prop("disabled", false);
         });
 
         $(".btn-addorupdate").click(function () {

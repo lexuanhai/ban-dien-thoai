@@ -264,6 +264,11 @@ namespace TECH.Service
                 {
                     query = query.Where(c => c.name.ToLower().Trim().Contains(ProductModelViewSearch.name.ToLower().Trim()));
                 }
+                if (ProductModelViewSearch.status.HasValue && ProductModelViewSearch.status.Value > 0)
+                {
+                    query = query.Where(c => c.status == ProductModelViewSearch.status.Value);
+                }
+
 
                 int totalRow = query.Count();
                 query = query.Skip((ProductModelViewSearch.PageIndex - 1) * ProductModelViewSearch.PageSize).Take(ProductModelViewSearch.PageSize);

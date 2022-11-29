@@ -1,0 +1,93 @@
+﻿@using TECH.Areas.Admin.Models
+@model List<ProductModelView>
+
+@if (Model != null && Model.Count > 0)
+{
+    @*<div>
+    <section class="ftco-section">
+        <div  class="container">
+            <div  class="row justify-content-center mb-3 pb-3">
+                <div  class="col-md-12 heading-section text-center">
+                    <h2  class="mb-4">Sản phẩm mới nhất fdfs</h2>
+                </div>
+            </div>
+        </div>
+        <div  class="container">
+            <div  class="cards">
+                @foreach (var item in Model)
+                {
+                    string priceStr = "";
+                    @if (item.price > 0)
+                                    {
+                            priceStr = item.price.Value.ToString("#,###");
+                                    }
+
+                    <div  class="card product border-product">
+                    <a  href="/chi-tiet-san-pham/@item.id" class="img-prod">
+                        <img  src="/product-image/@item.avatar" alt="Colorlib Template" class="img-fluid product-img"> <!---->
+                        <div  class="overlay"></div>
+                    </a>
+                    <div  class="text py-3 px-3">
+                        <h3 ><a  href="/chi-tiet-san-pham/@item.id" class="name-product">@item.name</a></h3>
+                        <div  class="price"><span  class="mr-2 price-color">@priceStr <i >đ</i></span></div>
+                                @if (item.ProductViews != null)
+                                {
+                                    <div data-v-7b8a01fc="" class="rate">
+                                        <span data-v-7b8a01fc="">
+                                            @item.ProductViews.star  <span data-v-7b8a01fc="" class="ion-ios-star"></span><span data-v-7b8a01fc="" class="sold">&nbsp;(@item.ProductViews.review_count)</span>
+                                        </span>
+                                    </div>
+                                    <div data-v-7b8a01fc="" class="endow"><span data-v-7b8a01fc="" class="endow"></span></div>
+                                }
+                    </div>
+                </div>
+                }
+
+
+            </div>
+        </div>
+    </section>
+</div>*@
+    <div class="box-product">
+        <h2 class="title-box">
+            <a href="javascript:void(0)" title="">
+                SẢN PHẨM KHUYẾN MÃI
+            </a>
+        </h2>
+        <div class="list-products">
+            @foreach (var item in Model)
+            {
+                string priceStr = "";
+                @if (item.price > 0)
+                {
+                    priceStr = item.price.Value.ToString("#,###");
+                }
+                <div class="item">
+                    <div class="pd-box ">
+                        <div class="box-images">
+                            <a href="javascript:void(0)" title="Mặt Nạ Ngủ Dưỡng Môi Laneige Lip Sleeping Mask 3gr">
+                                <img width="206" height="230" src="/website/img/san-pham1.jpg" class="img-reponsive owl-lazy " style="opacity: 1;">
+                            </a>
+                            <button type="button" onclick="LikeThis(this, '6767')" class="btn-addlike "><i class="fa fa-heart-o heart_new"></i></button>
+                            <div class="sale-off ">70%<br>OFF</div>
+                        </div>
+                        <div class="box-content">
+                            <h3>
+                                <a href="javascript:void(0)" title="@item.name">@item.name</a>
+                            </h3>
+                            <div>
+                                <span class="price-drop">@priceStr</span>
+                                <span class="price ">79,000₫</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+}
+
+
+

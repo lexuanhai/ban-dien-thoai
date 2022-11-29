@@ -15,7 +15,7 @@ namespace TECH.Service
     public interface IProductQuantityService
     {           
         int Add(QuantityProductModelView view);
-        bool Update(List<QuantityProductModelView> view);
+        bool Update(QuantityProductModelView view);
         QuantityProductModelView GetById(int quantityId);
         bool Deleted(List<int> ids);
         List<QuantityProductModelView> GetProductQuantity(int productId);
@@ -64,9 +64,9 @@ namespace TECH.Service
                 {
                     var image = new ProductQuantity
                     {
-                        product_id = view.ProductId,
-                        color_id = view.ColorId,
-                        totalimport = view.TotalImported,
+                        product_id = view.product_id,
+                        color_id = view.color_id,
+                        totalimport = view.totalimport,
                         priceimprot = view.priceimprot,
                         pricesell = view.pricesell,                       
                         capacity = view.capacity
@@ -102,24 +102,23 @@ namespace TECH.Service
         {
             _unitOfWork.Commit();
         }
-        public bool Update(List<QuantityProductModelView> view)
+        public bool Update(QuantityProductModelView view)
         {
             try
             {
-                if (view != null && view.Count > 0)
+                if (view != null)
                 {
-                    foreach (var item in view)
+                    var dataServer = _productQuantityRepository.FindById(view.id);
+                    if (dataServer != null)
                     {
-                        var dataServer = _productQuantityRepository.FindById(item.id);
-                        if (dataServer != null)
-                        {
-                            dataServer.product_id = item.ProductId;
-                            dataServer.size_id = item.AppSizeId;
-                            dataServer.color_id = item.ColorId;
-                            dataServer.totalimport = item.TotalImported;
-                            _productQuantityRepository.Update(dataServer);
-                           
-                        }
+                        //dataServer.product_id = view.ProductId;
+                        dataServer.color_id = view.color_id;
+                        dataServer.totalimport = view.totalimport;
+                        dataServer.capacity = view.capacity;
+                        dataServer.priceimprot = view.priceimprot;
+                        dataServer.pricesell = view.pricesell;                        
+                        _productQuantityRepository.Update(dataServer);
+
                     }
                     return true;
                 }
@@ -184,7 +183,8 @@ namespace TECH.Service
                     priceimprot = p.priceimprot,
                     pricesell = p.pricesell,
                     totalsell = p.totalsell,
-                    totalinventory = p.totalinventory,                     
+                    totalinventory = p.totalinventory,     
+                    capacity =p.capacity,
                 }).ToList();
 
                 var pagingData = new PagedResult<QuantityProductModelView>

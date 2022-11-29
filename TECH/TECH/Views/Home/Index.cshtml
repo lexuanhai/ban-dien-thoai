@@ -1,7 +1,9 @@
-﻿@{
+﻿@using TECH.Areas.Admin.Models.Search
+@{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@await Component.InvokeAsync("ProductSearchComponent", new ProductViewModelSearch { status = 1})
 @*@await Component.InvokeAsync("SidersComponent")*@
 @*
 @await Component.InvokeAsync("SidersComponent")
