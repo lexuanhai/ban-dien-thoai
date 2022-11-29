@@ -2,7 +2,7 @@
     Layout = null;
 }
 
-<div id="QuantityModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalTitle" class="modal fade" aria-modal="true">
+<div id="QuantityModalAdd" tabindex="-1" role="dialog" aria-labelledby="categoryModalTitle" class="modal fade" aria-modal="true" style="display:none">
     <div role="document" class="modal-dialog modal-lg">
         <form id="form-submit" action="#">
             <div class="modal-content">
@@ -17,7 +17,9 @@
                             <div class="form-group custom-select2">
                                 <label for="productcategoryid">Tên sản phẩm <span class="required">(*)</span></label>
                                 <select name="product_name" id="product_name" class="form-select form-control customselect2">
-                                    <option value="" selected="selected" disabled="disabled">Chọn sản phẩm</option>
+                                    <option value="" >Chọn sản phẩm</option>
+                                    <option value="" >Chọn sản phẩm 1</option>
+                                    <option value="" >Chọn sản phẩm 1</option>
                                 </select>
                                 @*<input type="text" id="productname" name="productname" class=" form-control" disabled>*@
                                 <!---->

@@ -109,7 +109,9 @@
         self.ValidateQuanity();
         $('.customselect2').select2();
         self.GetAllProduct();
-
+        $(".btn-add").click(function () {
+            $("#QuantityModalAdd").modal("show");
+        })
     }
   
     self.DeletedHtml = function (tag) {
@@ -540,78 +542,7 @@
         $("#product_name").html(html);
         /*return html;*/
     }
-    // Set value default
-    //self.SetValueDefault = function () {
-    //    self.Product.Id = null;
-    //    $("#fullname").val("").attr("placeholder", "Nhập tên người dùng");
-    //    $("#mobile").val("").attr("placeholder", "Nhập số điện thoại");
-    //    $("#birthday").val("").attr("placeholder", "Ngày sinh");
-    //    $("#email").val("").attr("placeholder", "Email");
-    //    $("#username").val("").attr("placeholder", "Tên đăng nhập");
-    //    $("#password").val("").attr("placeholder", "Mật khẩu");
-    //    $("#address").val("").attr("placeholder", "Địa chỉ");
-    //    $("#confirm_password").val("").attr("placeholder", "Nhập lại mật khẩu");
-    //    $(".box-avatar").css("display", "none");
-    //}
-    // Get User
-
-    //self.AddProduct = function (userView) {
-    //    $.ajax({
-    //        url: '/Admin/Product/Add',
-    //        type: 'POST',
-    //        dataType: 'json',
-    //        data: {
-    //            ProductModelView: userView
-    //        },
-    //        beforeSend: function () {
-    //            //Loading('show');
-    //        },
-    //        complete: function () {
-    //            //Loading('hiden');
-    //        },
-    //        success: function (response) {
-    //            if (response.success) {
-    //                if (self.ProductImages != null && self.ProductImages != "") {
-    //                    self.UploadFileImageProduct(response.id);
-    //                }
-    //                tedu.notify('Thêm mới dữ liệu thành công', 'success');
-    //                self.GetDataPaging(true);
-    //                window.location.href = '/admin/quan-ly-san-pham';
-    //            }
-    //            else {
-    //                if (response.isNameExist) {
-    //                    tedu.notify('Tên đã tồn tại', 'error');
-    //                    //$(".product-name-exist").show().text("Tên đã tồn tại");
-    //                }
-    //            }
-    //        }
-    //    })
-    //}
-
-    //self.Update = function (userView) {
-    //    $.ajax({
-    //        url: '/Admin/Product/Update',
-    //        type: 'POST',
-    //        dataType: 'json',
-    //        data: {
-    //            ProductModelView: userView
-    //        },
-    //        beforeSend: function () {
-    //            //Loading('show');
-    //        },
-    //        complete: function () {
-    //            //Loading('hiden');
-    //        },
-    //        success: function (response) {
-    //            if (response.success) {
-    //                tedu.notify('Cập nhật dữ liệu thành công', 'success');
-    //                self.GetDataPaging(true);
-    //                window.location.href = '/admin/quan-ly-san-pham';
-    //            }
-
-    //        }
-    //    })
-    //}
+    
 
     self.GetAllCategories = function () {
         $.ajax({
@@ -677,17 +608,20 @@
         }
         
 
-        //if (view.ImageModelView != null && view.ImageModelView.length > 0) {
-        //    self.ProductServerImages = view.ImageModelView;
-        //    for (var i = 0; i < view.ImageModelView.length; i++) {
-        //        var item = view.ImageModelView[i];
-        //        var html = "";
-        //        html = "<div class=\"box-image\" style=\"background-image:url(/product-image/" + item.name + ")\"><span onclick=\"removeImageViewServer(" + item.id + ",this)\" class='remove-image'>X</span></div>";
+        if (view.ImageModelView != null && view.ImageModelView.length > 0) {
+            self.ProductServerImages = view.ImageModelView;
+            for (var i = 0; i < view.ImageModelView.length; i++) {
+                var item = view.ImageModelView[i];
+                var html = "";
+                html = "<div class=\"box-image\" style=\"background-image:url(/quantity-image/" + item.name + ")\"><span onclick=\"removeImageViewServer(" + item.id + ",this)\" class='remove-image'>X</span></div>";
 
-        //        $(".productimages").append(html);
-        //    }
-        //}
-        $("#QuantityModal").modal("show");
+                $(".productimages").append(html);
+            }
+        }
+        else {
+            $(".productimages").html("");
+        }
+        $("#QuantityModalUpdate").modal("show");
         self.RenderProductToHtml(self.Products, view.Product.id);
 
     }
